@@ -1,0 +1,148 @@
+	.invit-form label {
+		display: block;
+	}
+
+	.invit-form input {
+		display: block;
+		width: 100%;
+		padding: 15px;
+		margin-bottom: 25px;
+		border: 1px solid #DD052B;
+	}
+
+	.invit-form select {
+		display: block;
+		width: 100%;
+		padding: 15px;
+		margin-bottom: 25px;
+		border: 1px solid #DD052B;
+	}
+
+	.invit-form {
+		width: 70%;
+		padding: 15px;
+		border: 1px solid #DD052B;
+		margin: 25px auto;
+		margin-bottom: 50px;
+		box-shadow: 0px 0px 11px 0px #DD052B;
+
+
+	}
+
+	.submit-btn {
+		padding: 15px 25px;
+		border: 1px solid #DD052B;
+		color: #DD052B;
+		font-weight: 500;
+		transition: 500ms all ease-in;
+		text-decoration: none;
+
+	}
+
+	.submit-btn:hover {
+		background: #DD052B;
+		color: #fff;
+		box-shadow: 0px 0px 11px 0px #DD052B;
+
+	}
+
+	.submit-btn-dashbord {
+		padding: 15px 25px;
+		border: 1px solid #1ee778;
+		color: #1ee778;
+		font-weight: 500;
+		transition: 500ms all ease-in;
+		text-decoration: none;
+
+	}
+
+	.submit-btn-dashbord:hover {
+		background: #1ee778;
+		color: #fff;
+		box-shadow: 0px 0px 11px 0px #1ee778;
+
+	}
+
+	.switch-red {
+		color: #DD052B;
+	}
+
+	.induction-video {
+		margin: 50px 0px;
+	}
+
+	.video {
+		margin-bottom: 25px
+	}
+
+	.question {
+		box-shadow: 0px 0px 11px 0px #DD052B;
+		border: 1px solid #DD052B;
+		padding: 35px 25px;
+		margin-bottom: 35px;
+	}
+
+	.quiz-block input {}
+
+	.quiz-block label {}
+
+	.question {
+		display: none;
+		animation: a-ltr-before 2s ease-in-out forwards;
+	}
+
+	#question1 {
+		display: block;
+	}
+
+	.submit-btn-block {
+		margin: 25px 0px;
+		margin-top: 40px
+	}
+
+
+	.disabled {
+		pointer-events: none;
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.error-message {
+		font-style: italic;
+		color: #DD052B;
+		font-size: 13px;
+	}
+
+	.finred {
+		border-bottom: 1px solid #DD052B;
+	}
+
+	.Success-message {
+		color: #1ee778
+	}
+
+
+	.fin-tbl tr {
+		transition: 300ms solid ease-in-out
+	}
+
+	.fin-tbl tr:hover {
+		background: #81eeb2;
+	}
+
+	.finthick-red {
+		border-bottom: 2px solid #DD052B;
+	}
+
+	.finright {
+		border-right: 1px solid #DD052B;
+	}
+
+	/* 
+	input:focus {
+	    border-color: blue;
+	} */
+
+	/* button:focus-visible {
+	    outline: 3px solid orange;
+	} */

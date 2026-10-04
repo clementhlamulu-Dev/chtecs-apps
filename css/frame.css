@@ -1,0 +1,263 @@
+.header-container {
+	padding: 10px 0px;
+}
+.navbar-nav,
+.navbar-expand-lg .navbar-nav .nav-link {
+	width: 100%;
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.breadcrumbs {
+	font-size: 12px;
+	padding: 0;
+	margin-bottom: 1rem;
+	list-style: none;
+	border-radius: 0rem;
+	text-align: right;
+	color: #403F3F
+}
+
+
+
+.navigation-holder {
+	position: relative;
+	background-color: #898989;
+	z-index: 9999;
+	border-bottom: 2px solid #d9d9d9;
+}
+
+.fin-icon {
+	position: relative;
+}
+
+.fin-hover .nav-link:after {
+	content: "\e93a";
+	font-family: 'icomoon';
+	position: absolute;
+	font-size: 13px;
+	right: -13px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-weight: bold;
+	border: none !important;
+}
+    .navbar-expand-lg .navbar-nav {
+        justify-content: space-between;
+	}
+.navbar-light .navbar-nav .nav-link {
+	color: #fff;
+	text-decoration: none;
+	position: relative;
+	padding: 15px 25px;
+}
+
+.menu-scroll {
+	position: fixed;
+	top: 0;
+	left: 0%;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 0px;
+	box-shadow: 0px 11px 5px -9px rgba(0, 0, 0, 0.42);
+	-webkit-box-shadow: 0px 11px 5px -9px rgba(0, 0, 0, 0.42);
+	-moz-box-shadow: 0px 11px 5px -9px rgba(0, 0, 0, 0.42);
+}
+
+.logo-block-scr {
+	display: none;
+}
+
+.logo-block-scr img {
+	width: 100px;
+}
+
+.menu-scroll .logo-block-scr {
+	display: block;
+	position: absolute;
+	top: 10px;
+}
+
+
+.nav-item,
+.nav-item-active {
+
+	position: unset;
+}
+
+
+.fin-hover:hover .nav-link:after {
+	color: #fff;
+}
+
+.nav-item-active .nav-link div {
+	font-weight: 600;
+}
+
+
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:hover {
+	color: #fff !important;
+}
+
+.navbar {
+	padding: 0;
+	position: unset;
+}
+
+.nav-item:hover .dropdown-menu {
+	display: block;
+}
+
+.navbarDropdownholder {
+	width: 100%;
+}
+
+.dropdown-menu {
+	color: #fff;
+	border-radius: 0;
+	background: #fff;
+	padding: 30px;
+	width: 100%;
+	border: none;
+	margin-top: 0px;
+	padding-bottom: 60px;
+	border-bottom: 3px solid #898989;
+	list-style: none;
+	display: none;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+
+}
+
+.dropdown-item {
+	color: #898989 !important;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	padding-left: 15px;
+	white-space: inherit;
+	z-index: 99;
+	text-decoration: none !important;
+	border-bottom: 1px solid #898989;
+}
+
+.dropdown-item:hover {
+	color: #d9d9d9 !important;
+	padding-left: 20px;
+	transition: all 600ms ease-in-out;
+	font-weight: 500 !important;
+}
+
+.nav-controller a {
+	text-decoration: none !important;
+}
+
+
+
+.last-dropdown {
+	left: auto;
+	right: 0px
+}
+
+.navbar-nav li:hover {
+	background-color: #d9d9d9;
+	color: #fff;
+	transition: all 500ms ease-in-out;
+}
+.navbar-expand-lg .navbar-nav .dropdown-toggle{ position: relative; padding-right: 30px;}
+.dropdown-toggle::after{
+    content: "\e93a";
+    position: absolute;
+    right: 5px;
+    font-family: 'icomoon';
+    font-weight: bold;
+    top: 15px;
+    border: none!important;
+}
+
+@media screen and (max-width: 1250px) {
+
+	.nav-item,
+	.nav-item-active {
+		margin-right: 0
+	}
+}
+
+@media screen and (max-width: 1199px) {
+	.results-subtitle {
+		width: 100%;
+	}
+}
+
+
+@media screen and (max-width:991px) {
+	
+	.fin-hover .nav-link:after {
+		right: 5px;
+	}
+
+	
+
+	.navbar-light .navbar-nav .nav-link {
+		position: relative;
+	}
+
+	.navigation-holder {
+		background: #898989;
+		padding: 15px;
+		position: relative;
+	}
+
+	.nav-item,
+	.nav-item-active {
+		border-right: 0px dotted #fff;
+		border-bottom: 0px dotted #fff;
+	}
+
+	.nav-item:hover .dropdown-menu {
+		display: none;
+	}
+
+	.dropdown-menu.show {
+		display: block !important;
+	}
+
+	
+
+
+	.dropdown-toggle::after {
+		position: absolute;
+		right: 0;
+		top: 15px;
+	}
+
+	.dropdown-menu {
+		min-width: 100%;
+	}
+
+	.foot-title {
+		margin-bottom: 15px;
+	}
+
+}
+
+@media screen and (max-width:800px) {
+
+	.scrollable {
+		width: 100%;
+		overflow-x: scroll;
+	}
+
+}
+
+
+@media screen and (max-width:576px) {
+
+	.logo-block {
+		text-align: center;
+		margin-bottom: 12px;
+	}
+
+}
