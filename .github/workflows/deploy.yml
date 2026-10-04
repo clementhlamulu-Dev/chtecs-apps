@@ -1,3 +1,4 @@
+```yaml
 name: CI/CD
 
 on:
@@ -34,14 +35,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Deploy files
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
-        with:
-          server: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          local_path: './*'
-          remote_path: '/home/qmzvdqsa/dev-apps.chtecs.co.za/'
-          sftp_only: true
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
+      - name: Deploy files using SFTP
+        env:
+          SFTP_HOST: ${{ secrets.SERVER_HOST }}
+          SFTP_PORT: ${{ secrets.SERVER_PORT }}
+          SFTP_USERNAME: ${{ secrets.SERVER_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -p "$SFTP_PASSWORD" sftp \
+            -o StrictHostKeyChecking=no \
+            -P "$SFTP_PORT" \
+            "$SFTP_USERNAME@$SFTP_HOST" <<EOF
+          cd /home/qmzvdqsa/dev-apps.chtecs.co.za/
+          put -r *
+          bye
+          EOF
+```
