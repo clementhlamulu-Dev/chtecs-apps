@@ -44,4 +44,3 @@ jobs:
           local_path: './*'
           remote_path: '/home/qmzvdqsa/dev-apps.chtecs.co.za/'
           sftp_only: true
-          rsyncArgs: '--exclude=.git --exclude=.github --exclude=.env'
