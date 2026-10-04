@@ -1,0 +1,55 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev-chtecs-apps
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Check PHP syntax
+        run: |
+          find . -name "*.php" -print0 | xargs -0 -n1 php -l
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy files using SFTP
+        env:
+          SFTP_HOST: ${{ secrets.SERVER_HOST }}
+          SFTP_PORT: ${{ secrets.SERVER_PORT }}
+          SFTP_USERNAME: ${{ secrets.SERVER_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -p "$SFTP_PASSWORD" sftp \
+            -o StrictHostKeyChecking=no \
+            -P "$SFTP_PORT" \
+            "$SFTP_USERNAME@$SFTP_HOST" <<EOF
+          cd /home/qmzvdqsa/dev-apps.chtecs.co.za/
+          put -r *
+          bye
+          EOF
+
