@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - chtecs-apps
+      - dev-chtecs-apps
   pull_request:
     branches:
       - main
@@ -11,13 +11,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
+
       - name: Check PHP syntax
         run: |
           find . -name "*.php" -print0 | xargs -0 -n1 php -l
@@ -25,9 +28,11 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
       - name: Deploy files
         uses: wangyucode/sftp-upload-action@v2.0.4
         with:
