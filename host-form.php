@@ -2,56 +2,56 @@
 include("includes/db-connect.php");
 
 
-// $sql = "CREATE TABLE InductionTable (
-//   user_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//     video_id VARCHAR(6) NOT NULL,
+$sql = "CREATE TABLE InductionTable (
+  user_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    video_id VARCHAR(6) NOT NULL,
 
-//     firstname VARCHAR(100) NOT NULL,
-//     email VARCHAR(70),
+    firstname VARCHAR(100) NOT NULL,
+    email VARCHAR(70),
 
-//     BusinessUnit VARCHAR(70) NOT NULL,
-//     Host VARCHAR(70) NOT NULL,
+    BusinessUnit VARCHAR(70) NOT NULL,
+    Host VARCHAR(70) NOT NULL,
 
-//     VideoProgress_seconds DECIMAL(10,2) DEFAULT 0,
-//     Videoprogress_percent DECIMAL(5,2) DEFAULT 0,
+    VideoProgress_seconds DECIMAL(10,2) DEFAULT 0,
+    Videoprogress_percent DECIMAL(5,2) DEFAULT 0,
 
-//     Question1 VARCHAR(70) ,
-//     Question2 VARCHAR(70) ,
-//     Question3 VARCHAR(70) ,
-//     Question4 VARCHAR(70) ,
-//     Question5 VARCHAR(70) ,
+    Question1 VARCHAR(70) ,
+    Question2 VARCHAR(70) ,
+    Question3 VARCHAR(70) ,
+    Question4 VARCHAR(70) ,
+    Question5 VARCHAR(70) ,
 
-//     Quiz_score INT DEFAULT 0,
-//     Quiz_Results BOOLEAN NOT NULL DEFAULT FALSE,
+    Quiz_score INT DEFAULT 0,
+    Quiz_Results BOOLEAN NOT NULL DEFAULT FALSE,
 
-//     col1 VARCHAR(500) ,
-//     col2 VARCHAR(500) ,
-//     col3 VARCHAR(500) ,
-//     col4 VARCHAR(500) ,
-//     col5 VARCHAR(500) ,
-//     col6 VARCHAR(500) ,
-//     col7 VARCHAR(500) ,
-//     col8 VARCHAR(500) ,
-//     col9 VARCHAR(500) ,
-//     col10 VARCHAR(500) ,
-//     col11 VARCHAR(500) ,
-//     col12 VARCHAR(500) ,
-//     col13 VARCHAR(500) ,
+    col1 VARCHAR(500) ,
+    col2 VARCHAR(500) ,
+    col3 VARCHAR(500) ,
+    col4 VARCHAR(500) ,
+    col5 VARCHAR(500) ,
+    col6 VARCHAR(500) ,
+    col7 VARCHAR(500) ,
+    col8 VARCHAR(500) ,
+    col9 VARCHAR(500) ,
+    col10 VARCHAR(500) ,
+    col11 VARCHAR(500) ,
+    col12 VARCHAR(500) ,
+    col13 VARCHAR(500) ,
 
-//     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-//         ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
 
-//     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-//     UNIQUE KEY unique_progress (user_id, video_id)
+    UNIQUE KEY unique_progress (user_id, video_id)
 
-// )";
+)";
 
-// if ($conn->query($sql) === TRUE) {
-// 	echo "Table created successfully";
-// } else {
-// 	echo "Error creating table: " . $conn->error;
-// }
+if ($conn->query($sql) === TRUE) {
+	echo "Table created successfully";
+} else {
+	echo "Error creating table: " . $conn->error;
+}
 
 
 
