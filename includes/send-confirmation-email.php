@@ -14,7 +14,7 @@ try {
     $mail->Host = 'mail.chtecs.co.za';
     $mail->SMTPAuth = true;
     $mail->Username = 'no-reply@chtecs.co.za';
-    $mail->Password = '@Clementhlamulu20';
+    $mail->Password = $emailpass;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
