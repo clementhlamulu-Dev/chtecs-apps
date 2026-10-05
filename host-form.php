@@ -1,60 +1,6 @@
 <?php
 require_once __DIR__ . "/includes/db-connect.php";
 
-
-// $sql = "CREATE TABLE InductionTable (
-//   user_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//     video_id VARCHAR(6) NOT NULL,
-
-//     firstname VARCHAR(100) NOT NULL,
-//     email VARCHAR(70),
-
-//     BusinessUnit VARCHAR(70) NOT NULL,
-//     Host VARCHAR(70) NOT NULL,
-
-//     VideoProgress_seconds DECIMAL(10,2) DEFAULT 0,
-//     Videoprogress_percent DECIMAL(5,2) DEFAULT 0,
-
-//     Question1 VARCHAR(70) ,
-//     Question2 VARCHAR(70) ,
-//     Question3 VARCHAR(70) ,
-//     Question4 VARCHAR(70) ,
-//     Question5 VARCHAR(70) ,
-
-//     Quiz_score INT DEFAULT 0,
-//     Quiz_Results BOOLEAN NOT NULL DEFAULT FALSE,
-
-//     col1 VARCHAR(500) ,
-//     col2 VARCHAR(500) ,
-//     col3 VARCHAR(500) ,
-//     col4 VARCHAR(500) ,
-//     col5 VARCHAR(500) ,
-//     col6 VARCHAR(500) ,
-//     col7 VARCHAR(500) ,
-//     col8 VARCHAR(500) ,
-//     col9 VARCHAR(500) ,
-//     col10 VARCHAR(500) ,
-//     col11 VARCHAR(500) ,
-//     col12 VARCHAR(500) ,
-//     col13 VARCHAR(500) ,
-
-//     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-//         ON UPDATE CURRENT_TIMESTAMP,
-
-//     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-//     UNIQUE KEY unique_progress (user_id, video_id)
-
-// )";
-
-// if ($conn->query($sql) === TRUE) {
-// 	echo "Table created successfully";
-// } else {
-// 	echo "Error creating table: " . $conn->error;
-// }
-
-
-
 ?>
 
 
@@ -201,20 +147,12 @@ require_once __DIR__ . "/includes/db-connect.php";
 					try {
 						if ($conn->query($sql) === TRUE) {
 
-							//Get the database-generated ID
-							$User_Id = mysqli_insert_id($conn);
-							$video_Id = $User_Id . substr($businessUnit, 0, 2) . substr($Host, 0, 2);
 
-							// Update video_id
-							$updateSql = "UPDATE InductionTable 
-							  SET video_id = '$video_Id'
-							  WHERE user_id = '$User_Id'";
-
-							mysqli_query($conn, $updateSql);
 
 							$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
-							include("includes/send-confirmation-email.php");
 
+							// require_once __DIR__ . "/includes/send-confirmation-email.php";
+			
 						} else {
 							$UploadmeassegeError = "Could not save invitation. Please try again.";
 						}
