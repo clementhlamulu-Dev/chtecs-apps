@@ -68,8 +68,13 @@
 					</div>
 
 					<script>
+
 						const video = document.getElementById("html5_video_7pxmfc8xc5b");
 						const proceedBtn = document.getElementById("proceedBtn");
+
+						// -----------------------------
+						// VIDEO COMPLETION
+						// -----------------------------
 
 						let unlocked = false;
 
@@ -84,6 +89,96 @@
 								proceedBtn.classList.remove("disabled");
 							}
 						});
+
+
+						// -----------------------------
+						// WATCH TIME TRACKING
+						// -----------------------------
+
+						let lastVideoTime = 0;
+						let accumulatedWatchTime = 0;
+
+
+						// Check video position every second
+						setInterval(function () {
+
+							// Video is playing
+							if (!video.paused && !video.ended && video.readyState >= 2) {
+
+								const currentVideoTime = video.currentTime;
+
+								/*
+								 * Calculate how much the video actually moved.
+								 */
+								const difference = currentVideoTime - lastVideoTime;
+
+								/*
+								 * Only count normal playback.
+						
+								 * If someone seeks forward 5 minutes,
+								 * we don't want to count those 5 minutes
+								 * as watched.
+								 */
+								if (difference > 0 && difference <= 2) {
+									accumulatedWatchTime += difference;
+								}
+
+								lastVideoTime = currentVideoTime;
+							}
+
+						}, 1000);
+
+
+						// -----------------------------
+						// SEND WATCH TIME EVERY 30 SEC
+						// -----------------------------
+
+						setInterval(function () {
+
+							if (accumulatedWatchTime >= 30) {
+
+								const secondsToSave = Math.floor(accumulatedWatchTime);
+
+								saveWatchTime(secondsToSave);
+
+								// Reset after sending
+								accumulatedWatchTime = 0;
+							}
+
+						}, 30000);
+
+
+						// -----------------------------
+						// SAVE TO DATABASE
+						// -----------------------------
+
+						function saveWatchTime(seconds) {
+
+							const formData = new FormData();
+
+							formData.append("video_id", "IT_VIDEO_001");
+							formData.append("watch_time", seconds);
+
+							fetch("save-video-progress.php", {
+								method: "POST",
+								body: formData
+							})
+								.then(response => response.json())
+								.then(data => {
+
+									if (data.success) {
+										console.log("Watch time saved:", seconds, "seconds");
+									} else {
+										console.error("Failed to save watch time:", data.message);
+									}
+
+								})
+								.catch(error => {
+									console.error("Error saving watch time:", error);
+								});
+
+						}
+
 					</script>
 				</div>
 			</div>

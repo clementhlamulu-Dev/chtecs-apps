@@ -2,7 +2,7 @@
 require_once __DIR__ . "/includes/db-connect.php";
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html>+
 <html lang="eng">
 
 <head>
