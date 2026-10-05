@@ -1,5 +1,5 @@
 <?php
-include("includes/db-connect.php");
+require_once __DIR__ . "/includes/db-connect.php";
 
 
 // $sql = "CREATE TABLE InductionTable (
@@ -66,8 +66,9 @@ include("includes/db-connect.php");
 <html lang="eng">
 
 <head>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
 	<title>Company Name Results type for the year ended Day&nbsp;Month&nbsp;Year |
 		<?php echo $pageTitle ?>
 	</title>
@@ -197,26 +198,28 @@ include("includes/db-connect.php");
 				 		VALUES ( '$FullName', '$VisitorEmail', '$businessUnit', '$Host' )";
 
 
-					if ($conn->query($sql) === TRUE) {
+					try {
+						if ($conn->query($sql) === TRUE) {
 
+							//Get the database-generated ID
+							$User_Id = mysqli_insert_id($conn);
+							$video_Id = $User_Id . substr($businessUnit, 0, 2) . substr($Host, 0, 2);
 
-						//Get the database-generated ID
-						$User_Id = mysqli_insert_id($conn);
-						$video_Id = $User_Id . substr($businessUnit, 0, 2) . substr($Host, 0, 2);
+							// Update video_id
+							$updateSql = "UPDATE InductionTable 
+							  SET video_id = '$video_Id'
+							  WHERE user_id = '$User_Id'";
 
-						// Update video_id
-						$updateSql = "UPDATE InductionTable 
-						  SET video_id = '$video_Id'
-						  WHERE user_id = user_id";
+							mysqli_query($conn, $updateSql);
 
-						mysqli_query($conn, $updateSql);
+							$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
+							include("includes/send-confirmation-email.php");
 
-
-						$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
-						include("includes/send-confirmation-email.php");
-
-					} else {
-						echo "Error: " . $sql . "<br>" . $conn->error;
+						} else {
+							$UploadmeassegeError = "Could not save invitation. Please try again.";
+						}
+					} catch (mysqli_sql_exception $e) {
+						$UploadmeassegeError = "Could not save invitation. Please contact support.";
 					}
 
 				} else {
