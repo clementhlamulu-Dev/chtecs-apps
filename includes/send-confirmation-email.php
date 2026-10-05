@@ -1,46 +1,86 @@
 <?php
+require_once __DIR__ . "../../environment-sec/config.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-$to = $VisitorEmail;
-$subject = "Visitor Induction Required";
+require 'vendor/autoload.php';
 
-$message = "
-<html>
-<head>
-    <title>Visitor Induction</title>
-</head>
+$mail = new PHPMailer(true);
 
-<body>
-    <p>Hi $FullName,</p>
+try {
 
-    <p>
-        You have been invited to complete the visitor induction for $businessUnit.
-    </p>
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host = 'mail.chtecs.co.za';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'no-reply@chtecs.co.za';
+    $mail->Password = '@Clementhlamulu20';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = 465;
 
-    <p>
-        Please click the link below to watch the induction video and complete the short assessment.
-    </p>
+    // Sender
+    $mail->setFrom(
+        'no-reply@chtecs.co.za',
+        'CH Technological Solutions'
+    );
 
-    <p>
-        <a href='https://yourwebsite.com/induction'>
-            Complete Visitor Induction
-        </a>
-    </p>
+    // Recipient
+    $mail->addAddress($VisitorEmail, $FullName);
 
-    <p>Thank you.</p>
-</body>
-</html>
-";
+    // BCC
+    $mail->addBCC('clementhlamulu@gmail.com');
 
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-$headers .= "From: CH technological solutions Website<no-reply@chtecs.co.za>\r\n";
-$headers .= "Reply-To: $to\r\n";
-$headers .= "Bcc: clementhlamulu@gmail.com\r\n";
+    // Email format
+    $mail->isHTML(true);
 
-if (mail($to, $subject, $message, $headers)) {
-    echo "Email sent!";
-} else {
-    echo "Email failed.";
+    $mail->Subject = 'Visitor Induction Required';
+
+    $mail->Body = "
+        <html>
+        <body>
+
+        <p>Hi $FullName,</p>
+
+        <p>
+            You have been invited to complete the visitor induction
+            for $businessUnit.
+        </p>
+
+        <p>
+            Please click the link below to watch the induction video
+            and complete the short assessment.
+        </p>
+
+        <p>
+            <a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$user_id&name=$VisitorName&businessUnit=$businessUnit&host=$Host'>
+                Start Visitor Induction
+            </a>
+        </p>
+
+        <p>Thank you.</p>
+
+        </body>
+        </html>
+    ";
+
+    $mail->AltBody = "
+        Hi $FullName,
+
+        You have been invited to complete the visitor induction
+        for $businessUnit.
+
+        Please visit the induction page to complete the video
+        and assessment.
+    ";
+
+    $mail->send();
+
+    echo "Email sent successfully.";
+
+} catch (Exception $e) {
+
+    echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+
 }
 
 ?>
