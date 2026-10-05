@@ -35,11 +35,11 @@
 							preload="none" width="100%" height="auto" id="html5_video_7pxmfc8xc5b">
 							<!-- MP4 must be first for iPad! -->
 
-							<source src="https://vod.overendstudio.co.za/video/Cell_C_BTH_lores_v3.mp4"
-								type="video/mp4"><!-- Safari / iOS video    -->
+							<source src="" type="video/mp4">
+							<!-- Safari / iOS video    -->
 
-							<source src="https://vod.overendstudio.co.za/video/Cell_C_BTH_lores_v3.webm"
-								type="video/webm">
+							<source src="https://dev-apps.chtecs.co.za/videos/worksafe-induction-video.mp4"
+								type="video/mp4">
 							<!-- fallback to Flash: -->
 							<object width="650" height="390" type="application/x-shockwave-flash" data="player.swf"
 								class="skrollable skrollable-between">

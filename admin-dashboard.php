@@ -1,5 +1,5 @@
 <?php
-include("includes/db-connect.php");
+require_once __DIR__ . "/includes/db-connect.php";
 ?>
 
 <!DOCTYPE html>

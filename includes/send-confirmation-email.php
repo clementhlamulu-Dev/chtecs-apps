@@ -1,9 +1,8 @@
-
 <?php
- 
-$to = "clement.maluleke@bastiongroup.co.za";
+
+$to = $VisitorEmail;
 $subject = "Visitior Induction Required";
- 
+
 $message = "
 <html>
 
@@ -25,7 +24,7 @@ $message = "
 
 
 $headers = [];
-$headers  = "MIME-Version: 1.0\r\n";
+$headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 $headers .= "From: Website <website@example.com>\r\n";
 $headers .= "From: Blu Label Website <no-reply@bluelabeltelecoms.co.za>";
@@ -34,7 +33,7 @@ $headers .= "Bcc: reginal.chauke@bastiongroup.co.za";
 
 
 
- 
+
 if (mail($to, $subject, $message, $headers)) {
     echo "Email sent!";
 } else {
