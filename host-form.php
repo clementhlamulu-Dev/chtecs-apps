@@ -151,8 +151,8 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 							$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
 
-							// require_once __DIR__ . "/includes/send-confirmation-email.php";
-			
+							require_once __DIR__ . "/includes/send-confirmation-email.php";
+
 						} else {
 							$UploadmeassegeError = "Could not save invitation. Please try again.";
 						}
