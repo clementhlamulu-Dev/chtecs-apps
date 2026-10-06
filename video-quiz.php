@@ -39,18 +39,33 @@
 
 			<div class="quiz-block">
 
-				<form action="">
+				<?php
+				$Question1 = $Question3 = $Question2 = $Question4 = $Question5 = "";
+				$q1Err = $q2Err = $q3Err = $q4Err = $q5Err = "";
+
+				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					if (empty($_POST["Question1"])) {
+						$q1Err = "Please select a an Answer from the given below";
+					}
+				}
+				?>
+
+				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 					<div class="row">
 						<div class="col-lg-12">
-
+							<p class="error-message">
+								<?php echo $q1Err ?>
+								</php>
 							<div class="question fadeIn" id="question1">
 								<p>What is the main purpose of health and safety?</p>
+
 								<input type="radio" id="Run" name="question1" value="To stay safe every day.">
 								<label for="" id="To stay safe every day.">To stay safe every day.</label><br>
 
 								<input type="radio" id="stay" name="question1"
 									value="To show that you can follow the rules.">
-								<label for="" id="To show that you can follow the rules.">To show that you can follow
+								<label for="" id="To show that you can follow the rules.">To show that you can
+									follow
 									the rules.</label><br>
 
 								<input type="radio" id="call-sos" name="question1" value="To stay employed">
@@ -58,12 +73,17 @@
 
 								<input type="radio" id="emergency-exit" name="question1"
 									value="Protect Employer's Equipment">
-								<label for="" id="Protect Employer's Equipment">Protect Employer's Equipment</label><br>
+								<label for="" id="Protect Employer's Equipment">Protect Employer's
+									Equipment</label><br>
 
 
 								<div class="submit-btn-block">
 									<a class="submit-btn" href="javascript::void()" onclick="nextQuestion()">Next
 										Question</a>
+								</div>
+								<div class="quiz-nav">
+
+									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
 								</div>
 							</div>
 
@@ -86,6 +106,10 @@
 								<div class="submit-btn-block">
 									<a class="submit-btn" href="javascript::void()" onclick="nextQuestion()">Next
 										Question</a>
+								</div>
+								<div class="quiz-nav">
+									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
+									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
 								</div>
 							</div>
 
@@ -110,6 +134,10 @@
 									<a class="submit-btn" href="javascript::void()" onclick="nextQuestion()">Next
 										Question</a>
 								</div>
+								<div class="quiz-nav">
+									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
+									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
+								</div>
 							</div>
 
 							<div class="question fadeIn" id="question4">
@@ -132,6 +160,10 @@
 									<a class="submit-btn" href="javascript::void()" onclick="nextQuestion()">Next
 										Question</a>
 								</div>
+								<div class="quiz-nav">
+									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
+									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
+								</div>
 							</div>
 
 							<div class="question fadeIn" id="question5">
@@ -153,8 +185,74 @@
 								<div class="submit-btn-block">
 									<button class="submit-btn">Finish and Submit Quiz</button>
 								</div>
-							</div>
+								<div class="quiz-nav">
+									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
 
+								</div>
+							</div>
+							<style>
+								.quiz-nav {
+									display: inline-block;
+									width: 50%
+								}
+
+
+
+								.prev-block,
+								.next-block {
+									display: inline-block;
+									position: relative;
+									padding: 15px;
+									width: 40px;
+									height: 40px;
+									border: 1px solid #DD052B;
+									border-radius: 50%;
+									cursor: pointer;
+									transition: 400ms all ease-in-out;
+								}
+
+								.prev-block:hover,
+								.next-block:hover {
+
+									box-shadow: 0px 0px 11px 0px #DD052B;
+
+
+								}
+
+								.question p {
+									font-weight: 600;
+								}
+
+								.prev-block:before {
+									content: "\e93b";
+									font-family: "icomoon";
+									position: absolute;
+									transition: inherit;
+
+									color: #DD052B;
+									font-size: 15px;
+									font-weight: 600;
+
+									top: 50%;
+									transform: translate(-50%, -50%);
+									left: 50%;
+								}
+
+								.next-block:before {
+									content: "\e93c";
+									font-family: "icomoon";
+									position: absolute;
+									transition: inherit;
+
+									color: #DD052B;
+									font-size: 15px;
+									font-weight: 600;
+
+									top: 50%;
+									transform: translate(-50%, -50%);
+									left: 50%;
+								}
+							</style>
 							<script>
 								let current = 1;
 								const totalQuestions = 5;
@@ -162,6 +260,15 @@
 								function nextQuestion() {
 									document.getElementById("question" + current).style.display = "none";
 									current++;
+
+									if (current <= totalQuestions) {
+										document.getElementById("question" + current).style.display = "block";
+									}
+								}
+
+								function PrevQuestion() {
+									document.getElementById("question" + current).style.display = "none";
+									current--;
 
 									if (current <= totalQuestions) {
 										document.getElementById("question" + current).style.display = "block";
