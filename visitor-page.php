@@ -1,3 +1,10 @@
+<?php
+$user_id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+if (!$user_id) {
+	die("Invalid induction link.");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="eng">
 
@@ -62,7 +69,7 @@
 					</div>
 
 					<div class="col-lg-12 ">
-						<a href="video-quiz.php" id="proceedBtn" class="submit-btn disabled">
+						<a href="video-quiz.php?id=<?php echo $user_id; ?>" id="proceedBtn" class="submit-btn disabled">
 							Proceed
 						</a>
 					</div>
@@ -72,112 +79,82 @@
 						const video = document.getElementById("html5_video_7pxmfc8xc5b");
 						const proceedBtn = document.getElementById("proceedBtn");
 
-						// -----------------------------
-						// VIDEO COMPLETION
-						// -----------------------------
+						const USER_ID = <?php echo json_encode($user_id); ?>;
+						const SAVE_EVERY = 10;
+						const UNLOCK_RATIO = 0.8;
+						const ENDPOINT = "save-video-progress.php";
 
+						let lastVideoTime = 0;
+						let unsaved = 0;
+						let totalWatched = 0;
 						let unlocked = false;
 
-						video.addEventListener("timeupdate", function () {
+						// Load previous progress and resume
+						video.addEventListener("loadedmetadata", () => {
+							fetch(`${ENDPOINT}?id=${encodeURIComponent(USER_ID)}`)
+								.then(r => r.json())
+								.then(data => {
+									if (!data.success) return;
+									totalWatched = data.watched;
+									if (data.last_position > 0 && data.last_position < video.duration - 2) {
+										video.currentTime = data.last_position;
+									}
+									lastVideoTime = video.currentTime;
+									checkUnlock();
+								})
+								.catch(err => console.error("Could not load progress:", err));
+						});
 
-							if (unlocked || !video.duration) return;
+						// Count only normal playback, not skipping
+						video.addEventListener("timeupdate", () => {
+							const diff = video.currentTime - lastVideoTime;
+							if (!video.seeking && diff > 0 && diff <= 1.5) {
+								unsaved += diff;
+								totalWatched += diff;
+							}
+							lastVideoTime = video.currentTime;
 
-							const percentage = (video.currentTime / video.duration) * 100;
+							if (unsaved >= SAVE_EVERY) flush();
+							checkUnlock();
+						});
 
-							if (percentage >= 80) {
+						video.addEventListener("seeked", () => { lastVideoTime = video.currentTime; });
+
+						function checkUnlock() {
+							if (!unlocked && video.duration && totalWatched >= video.duration * UNLOCK_RATIO) {
 								unlocked = true;
 								proceedBtn.classList.remove("disabled");
 							}
-						});
+						}
 
-
-						// -----------------------------
-						// WATCH TIME TRACKING
-						// -----------------------------
-
-						let lastVideoTime = 0;
-						let accumulatedWatchTime = 0;
-
-
-						// Check video position every second
-						setInterval(function () {
-
-							// Video is playing
-							if (!video.paused && !video.ended && video.readyState >= 2) {
-
-								const currentVideoTime = video.currentTime;
-
-								/*
-								 * Calculate how much the video actually moved.
-								 */
-								const difference = currentVideoTime - lastVideoTime;
-
-								/*
-								 * Only count normal playback.
-						
-								 * If someone seeks forward 5 minutes,
-								 * we don't want to count those 5 minutes
-								 * as watched.
-								 */
-								if (difference > 0 && difference <= 2) {
-									accumulatedWatchTime += difference;
-								}
-
-								lastVideoTime = currentVideoTime;
-							}
-
-						}, 1000);
-
-
-						// -----------------------------
-						// SEND WATCH TIME EVERY 30 SEC
-						// -----------------------------
-
-						setInterval(function () {
-
-							if (accumulatedWatchTime >= 30) {
-
-								const secondsToSave = Math.floor(accumulatedWatchTime);
-
-								saveWatchTime(secondsToSave);
-
-								// Reset after sending
-								accumulatedWatchTime = 0;
-							}
-
-						}, 30000);
-
-
-						// -----------------------------
-						// SAVE TO DATABASE
-						// -----------------------------
-
-						function saveWatchTime(seconds) {
+						function flush(useBeacon = false) {
+							const seconds = Math.floor(unsaved);
+							if (seconds < 1) return;
+							unsaved -= seconds;
 
 							const formData = new FormData();
-
-							formData.append("video_id", "IT_VIDEO_001");
+							formData.append("id", USER_ID);
 							formData.append("watch_time", seconds);
+							formData.append("position", video.currentTime.toFixed(2));
+							formData.append("duration", video.duration.toFixed(2));   // ← was missing
 
-							fetch("save-video-progress.php", {
-								method: "POST",
-								body: formData
-							})
-								.then(response => response.json())
+							if (useBeacon) {
+								navigator.sendBeacon(ENDPOINT, formData);
+								return;
+							}
+
+							fetch(ENDPOINT, { method: "POST", body: formData })
+								.then(r => r.json())
 								.then(data => {
-
-									if (data.success) {
-										console.log("Watch time saved:", seconds, "seconds");
-									} else {
-										console.error("Failed to save watch time:", data.message);
-									}
-
+									if (data.success) console.log("Saved", seconds, "seconds");
+									else { console.error("Save failed:", data.message); unsaved += seconds; }
 								})
-								.catch(error => {
-									console.error("Error saving watch time:", error);
-								});
-
+								.catch(err => { console.error("Save error:", err); unsaved += seconds; });
 						}
+
+						video.addEventListener("pause", () => flush());
+						video.addEventListener("ended", () => flush());
+						window.addEventListener("pagehide", () => flush(true));
 
 					</script>
 				</div>

@@ -44,7 +44,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 
 			$nameErr = $emailErr = $BusinessErr = $HostErr = "";
-			$FullName = $VisitorEmail = $businessUnit = $Uploadmeassege = $UploadmeassegeError = "";
+			$FullName = $VisitorEmail = $businessUnit = $Uploadmeassege = $UploadmeassegeError = $linkUserTest = $linkUserLive = "";
 			$upload_ready = 1;
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -144,11 +144,14 @@ require_once __DIR__ . "/includes/db-connect.php";
 						if ($conn->query($sql) === TRUE) {
 
 
-
+							$last_id = $conn->insert_id;
 							$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
 
-							require_once __DIR__ . "/includes/send-confirmation-email.php";
-
+							//require_once __DIR__ . "/includes/send-confirmation-email.php";
+			
+							$linkUserTest = "Test Link: http://localhost/chtecs-apps/visitor-page.php?id=$last_id";
+							// $linkUserLive = "Live Link: http://dev-app.chtecs.co.za/visitor-page.php?id=$last_id";
+			
 						} else {
 							$UploadmeassegeError = "Could not save invitation. Please try again.";
 						}
@@ -185,6 +188,8 @@ require_once __DIR__ . "/includes/db-connect.php";
 							<div class="col-lg-12">
 
 								<p class="Success-message"><?php echo $Uploadmeassege ?></php>
+								<p class="Success-message"> <?php echo $linkUserTest ?></php>
+								<p class="Success-message"> <?php echo $linkUserLive ?></php>
 								<p class="error-message"><?php echo $UploadmeassegeError ?></php>
 								</p>
 								<label for="">Visitor name</label> <span
