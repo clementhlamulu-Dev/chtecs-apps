@@ -1,7 +1,4 @@
 <?php
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 require_once __DIR__ . '/../../enviroment-sec/config.php';
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -36,42 +33,42 @@ try {
     $mail->Subject = 'Visitor Induction Required';
 
     $mail->Body = "
-        <html>
-        <body>
+										<html>
+										<body>
 
-        <p>Hi $VisitorName,</p>
+										<p>Hi $FullName,</p>
 
-        <p>
-            You have been invited to complete the visitor induction
-            for $businessUnit.
-        </p>
+										<p>
+											You have been invited to complete the induction
+											for $businessUnit.
+										</p>
 
-        <p>
-            Please click the link below to watch the induction video
-            and complete the short assessment.
-        </p>
+										<p>
+											Please click the link below to watch the induction video
+											and complete the short assessment.
+										</p>
 
-        <p>
-            <a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$user_id&name=$VisitorName&businessUnit=$businessUnit&host=$Host'>
-                Start Visitor Induction
-            </a>
-        </p>
+										<p>
+											<a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id'>
+												Start Visitor Induction
+											</a>
+										</p>
 
-        <p>Thank you.</p>
+										<p>Thank you.</p>
 
-        </body>
-        </html>
-    ";
+										</body>
+										</html>
+									";
 
     $mail->AltBody = "
-        Hi $FullName,
+										Hi $FullName,
 
-        You have been invited to complete the visitor induction
-        for $businessUnit.
+										You have been invited to complete the visitor induction
+										for $businessUnit.
 
-        Please visit the induction page to complete the video
-        and assessment.
-    ";
+										Please visit the induction page to complete the video
+										and assessment.
+									";
 
     $mail->send();
 

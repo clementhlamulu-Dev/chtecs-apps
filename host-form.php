@@ -162,6 +162,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 							$mail = new PHPMailer(true);
 
+
 							try {
 
 								// SMTP configuration
@@ -197,7 +198,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 										<p>Hi $FullName,</p>
 
 										<p>
-											You have been invited to complete the visitor induction
+											You have been invited to complete the induction
 											for $businessUnit.
 										</p>
 
@@ -230,8 +231,8 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 								$mail->send();
 
-								echo "Email sent successfully.";
-
+								//
+			
 							} catch (Exception $e) {
 
 								echo "Email could not be sent. Error: {$mail->ErrorInfo}";
