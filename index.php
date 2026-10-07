@@ -1,6 +1,6 @@
 <?php
 
-header("host-form.php");
+header("https://dev-apps.chtecs.co.za/index.php");
 
 exit;
 
