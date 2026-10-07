@@ -148,7 +148,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 							$Uploadmeassege = "Invitation created. You will recieve a confirmation email.";
 
 							// require_once __DIR__ . "../environment-sec/config.php";
-							require_once("../environment-sec/config.php");
+							require_once __DIR__ . '/../enviroment-sec/config.php';
 							require_once __DIR__ . "/includes/send-confirmation-email.php";
 
 							//$linkUserTest = "Test Link: http://localhost/chtecs-apps/visitor-page.php?id=$last_id";

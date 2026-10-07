@@ -39,7 +39,7 @@ try {
         <html>
         <body>
 
-        <p>Hi $FullName,</p>
+        <p>Hi $VisitorName,</p>
 
         <p>
             You have been invited to complete the visitor induction
