@@ -1,5 +1,15 @@
-<!DOCTYPE html>
-<html lang="eng">
+<?php
+$user_id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+if (!$user_id) {
+	die("Invalid induction link.");
+}
+
+
+require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
+
+
+
+?>
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,6 +76,13 @@
 							$Quiz_Results = "Sorry You have failed your Quiz. Your score is " . $userCore;
 						}
 
+						$sql = "UPDATE InductionTable SET Question1 = '$Question1', Question2 = '$Question2', Question3 = '$Question3', Question4 = '$Question4', Question5 = '$Question5', Quiz_Results = '$userCore' WHERE user_id = $user_id";
+
+						if ($conn->query($sql) === TRUE) {
+							echo "Record updated successfully";
+						} else {
+							echo "Error updating record: " . $conn->error;
+						}
 					}
 				}
 

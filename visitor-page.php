@@ -1,4 +1,6 @@
 <?php
+
+
 $user_id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
 if (!$user_id) {
 	die("Invalid induction link.");
