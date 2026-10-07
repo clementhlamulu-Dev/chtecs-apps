@@ -1,5 +1,7 @@
 # Database credentials
 includes/db-config.php
+
+includes/db-config.php
  
 # Environment variables
 .env
