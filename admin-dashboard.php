@@ -145,26 +145,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 			</div>
 
 			<style>
-				.das-summery {
-					background-color: #1B3B5F;
-					color: #fff;
-					padding: 20px;
-					margin-bottom: 20px;
-					min-height: 100%;
-					border-radius: 5px;
-					text-align: center;
-				}
 
-				.das-discription {
-					font-weight: 400;
-					font-size: 13px;
-				}
-
-				.dash-number {
-					font-size: 30px;
-					font-weight: 600;
-					text-align: center;
-				}
 			</style>
 
 
@@ -281,7 +262,9 @@ require_once __DIR__ . "/includes/db-connect.php";
 													<div class='min-100-relative'>
 															<div class='video-block'>
 															<div class='dblock'>
-																<a href='quiz-results.php?id=$user_id' class='btn delete-btn'>Delete</a>
+															<form action='quiz-results.php' method='post'>
+																<button type='submit' href='quiz-results.php?id=$user_id' class='btn delete-btn'>Delete</button>
+																</form>
 																</div>
 														</div>
 													</div>
@@ -299,92 +282,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 				}
 				?>
 				<style>
-					.dblock {
-						display: block;
-						margin-bottom: 15px;
-					}
 
-					.progress-container {
-						width: 100px;
-						height: 15px;
-						background-color: #f3f3f3;
-						border-bottom-left-radius: 30px;
-						border-bottom-right-radius: 30px;
-						border-top-left-radius: 30px;
-						border-top-right-radius: 30px;
-						border: 1px solid #1B3B5F;
-
-					}
-
-					.progress-bar {
-						height: 100%;
-						background-color: #1B3B5F;
-						border-bottom-left-radius: 30px;
-						border-bottom-right-radius: 30px;
-						border-top-left-radius: 30px;
-						border-top-right-radius: 30px;
-					}
-
-					.dashboard-headline {
-						font-size: 22px;
-						margin-bottom: 0px;
-						font-weight: 600;
-						color: #1B3B5F;
-					}
-
-					.video-block {
-						height: 100%;
-						padding: 0px 0px;
-						padding-top: 0px;
-					}
-
-					.name-block {
-						position: relative;
-						padding-left: 70px;
-					}
-
-					.name-block h3 {
-						font-size: 22px;
-						margin-bottom: 5px;
-						margin-top: 0px !important;
-					}
-
-					.user-email {
-						font-size: 14px;
-						color: #1B3B5F;
-						margin-bottom: 0px;
-						font-style: italic;
-					}
-
-					.dashboard-block {
-						border-bottom: 1px solid #ccc;
-						padding: 10px 0;
-					}
-
-					.min-100-relative {
-						position: relative;
-						min-height: 100%;
-					}
-
-					.initials-blcok {
-						position: absolute;
-						top: 33%;
-						left: 23px;
-						transform: translate(-50%, -50%);
-					}
-
-					.initials {
-						display: inline-block;
-						width: 50px;
-						height: 50px;
-						border-radius: 50%;
-						background-color: #eee;
-						color: #1B3B5F;
-						border: 1px solid #1B3B5F;
-						text-align: center;
-						line-height: 50px;
-						font-size: 20px;
-					}
 				</style>
 
 

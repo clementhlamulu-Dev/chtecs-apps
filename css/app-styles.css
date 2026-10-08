@@ -91,9 +91,7 @@
 		margin-bottom: 35px;
 	}
 
-	.quiz-block input {}
-
-	.quiz-block label {}
+	
 
 	.question {
 		display: none;
@@ -148,6 +146,128 @@
 	.finright {
 		border-right: 1px solid #1B3B5F;
 	}
+
+
+
+		.dblock {
+						display: block;
+						margin-bottom: 15px;
+					}
+
+					.progress-container {
+						width: 100px;
+						height: 15px;
+						background-color: #f3f3f3;
+						border-bottom-left-radius: 30px;
+						border-bottom-right-radius: 30px;
+						border-top-left-radius: 30px;
+						border-top-right-radius: 30px;
+						border: 1px solid #1B3B5F;
+					}
+
+					.delete-btn {
+						background-color: #ff4d4d;
+						color: white;
+						border: none;
+						padding: 5px 10px;
+						text-align: center;
+						text-decoration: none;
+						display: inline-block;
+						font-size: 14px;
+						border-radius: 5px;
+						cursor: pointer;
+					}
+
+					.progress-bar {
+						height: 100%;
+						background-color: #1B3B5F;
+						border-bottom-left-radius: 30px;
+						border-bottom-right-radius: 30px;
+						border-top-left-radius: 30px;
+						border-top-right-radius: 30px;
+					}
+
+					.dashboard-headline {
+						font-size: 22px;
+						margin-bottom: 0px;
+						font-weight: 600;
+						color: #1B3B5F;
+					}
+
+					.video-block {
+						height: 100%;
+						padding: 0px 0px;
+						padding-top: 0px;
+					}
+
+					.name-block {
+						position: relative;
+						padding-left: 70px;
+					}
+
+					.name-block h3 {
+						font-size: 22px;
+						margin-bottom: 5px;
+						margin-top: 0px !important;
+					}
+
+					.user-email {
+						font-size: 14px;
+						color: #1B3B5F;
+						margin-bottom: 0px;
+						font-style: italic;
+					}
+
+					.dashboard-block {
+						border-bottom: 1px solid #ccc;
+						padding: 10px 0;
+					}
+
+					.min-100-relative {
+						position: relative;
+						min-height: 100%;
+					}
+
+					.initials-blcok {
+						position: absolute;
+						top: 33%;
+						left: 23px;
+						transform: translate(-50%, -50%);
+					}
+
+					.initials {
+						display: inline-block;
+						width: 50px;
+						height: 50px;
+						border-radius: 50%;
+						background-color: #eee;
+						color: #1B3B5F;
+						border: 1px solid #1B3B5F;
+						text-align: center;
+						line-height: 50px;
+						font-size: 20px;
+					}
+
+						.das-summery {
+					background-color: #1B3B5F;
+					color: #fff;
+					padding: 20px;
+					margin-bottom: 20px;
+					min-height: 100%;
+					border-radius: 5px;
+					text-align: center;
+				}
+
+				.das-discription {
+					font-weight: 400;
+					font-size: 13px;
+				}
+
+				.dash-number {
+					font-size: 30px;
+					font-weight: 600;
+					text-align: center;
+				}
 
 	/* 
 	input:focus {

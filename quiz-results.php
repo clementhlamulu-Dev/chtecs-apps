@@ -1,4 +1,8 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $user_id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
 if (!$user_id) {
 	die("Invalid induction link.");
@@ -39,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo "Record updated successfully";
 
 			// ===========================Email to user=================================================================
-
 
 			require_once __DIR__ . '/../enviroment-sec/config.php';
 			require __DIR__ . '/vendor/autoload.php';
@@ -222,18 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 			// ================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
 		} else {
 			echo "Error updating record: " . $conn->error;
 		}
@@ -291,20 +282,69 @@ function checkAnswers($ChoosenAnswer, $correctAnswer, $scoreCount)
 
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="quiz-results-block">
+			</div>
 
-
-					</div>
-				</div>
-
-				<div class="col-lg-4">
-					<div class="quiz-results-block">
-
-
-					</div>
+			<div class="correction-block">
+				<div class="r-question">
+					<p>1. What is the main purpose of health and safety?</p>
+					<p>Your answer: <?php echo $Question1 ?></p>
+					<p>Correct answer: To stay safe every day</p>
 				</div>
 			</div>
+
+
+			<div class="correction-block">
+				<div class="r-question">
+					<p>1. What is the main purpose of health and safety?</p>
+					<p>Your answer: <?php echo $Question1 ?></p>
+					<p>Correct answer: To stay safe every day</p>
+				</div>
+			</div>
+
+			<div class="correction-block">
+				<div class="r-question">
+					<p>2. One of your right as employee is to?</p>
+					<p>Your answer: <?php echo $Question2 ?></p>
+					<p>Correct answer: Work in a Health and Safe Environment</p>
+				</div>
+			</div>
+
+
+			<div class="correction-block">
+				<div class="r-question">
+					<p>3. What is the main purpose of health and safety?</p>
+					<p>Your answer: <?php echo $Question3 ?></p>
+					<p>Correct answer: Follow health and Safety instructions</p>
+				</div>
+			</div>
+
+			<div class="correction-block">
+				<div class="r-question">
+					<p>4. Your responsibility as an employee is to?</p>
+					<p>Your answer:
+						<?php echo $Question4 ?>
+					</p>
+					<p>Correct answer: Take care of your own health and safety</p>
+				</div>
+			</div>
+
+
+			<div class="correction-block">
+				<div class="r-question">
+					<p>5. What should you do if you notice unsafe event?</p>
+					<p>Your answer:
+						<?php echo $Question5 ?>
+					</p>
+					<p>Correct answer: Speak up</p>
+				</div>
+			</div>
+
+
+
+
+
+
+
 
 		</div>
 	</div>
