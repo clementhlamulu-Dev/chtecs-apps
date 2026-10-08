@@ -8,6 +8,19 @@ if (!$user_id) {
 	die("Invalid induction link.");
 }
 
+
+
+$sql = "SELECT * FROM InductionTable WHERE user_id = $user_id";
+
+
+$result = $conn->query($sql);
+// Process the result set
+if ($result->num_rows > 0) {
+	// Output data of each row
+	while ($row = $result->fetch_assoc()) {
+		$VisitorEmail = $row["email"];
+	}
+}
 require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 $Question1 = $Question3 = $Question2 = $Question4 = $Question5 = "";
 $q1Err = $Quiz_Results = "";
@@ -137,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-			// ===========================Email to user=================================================================
+			// ===========================Email to admin=================================================================
 
 
 			require_once __DIR__ . '/../enviroment-sec/config.php';
