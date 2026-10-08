@@ -22,6 +22,8 @@ if ($result->num_rows > 0) {
 		$FullName = $row["firstname"];
 	}
 }
+
+
 require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 $Question1 = $Question3 = $Question2 = $Question4 = $Question5 = "";
 $q1Err = $Quiz_Results = "";

@@ -272,7 +272,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 																<div class='dblock'>
 															
-																<a href='quiz-results.php?id=$user_id' class='btn delete-btn'>View Results</a>
+																<a href='quiz-results.php?id=$user_id' class='btn delete-btn'>View Quiz</a>
 																
 																</div>
 														</div>
