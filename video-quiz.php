@@ -197,7 +197,7 @@ require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 									padding: 15px;
 									width: 40px;
 									height: 40px;
-									border: 1px solid #DD052B;
+									border: 1px solid #1B3B5F;
 									border-radius: 50%;
 									cursor: pointer;
 									transition: 400ms all ease-in-out;
@@ -206,7 +206,7 @@ require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 								.prev-block:hover,
 								.next-block:hover {
 
-									box-shadow: 0px 0px 11px 0px #DD052B;
+									box-shadow: 0px 0px 11px 0px #1B3B5F;
 
 
 								}
@@ -221,7 +221,7 @@ require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 									position: absolute;
 									transition: inherit;
 
-									color: #DD052B;
+									color: #1B3B5F;
 									font-size: 15px;
 									font-weight: 600;
 
@@ -236,7 +236,7 @@ require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 									position: absolute;
 									transition: inherit;
 
-									color: #DD052B;
+									color: #1B3B5F;
 									font-size: 15px;
 									font-weight: 600;
 

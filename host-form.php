@@ -29,16 +29,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 	<div id="selectable-content">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main-page-heading">
-						<h1 class="switch-red text-center">
-							Invite a Visitor
-						</h1>
-					</div>
 
-				</div>
-			</div>
 
 			<?php
 
@@ -283,13 +274,20 @@ require_once __DIR__ . "/includes/db-connect.php";
 						<div class="row">
 							<div class="col-lg-12">
 
+								<div class="main-page-heading">
+									<h1 class="mb-3 mt-2 switch-dblue">
+										Invite a Visitor
+									</h1>
+
+									<p>Enter the visitor's details below to send them an induction invitation.</p>
+								</div>
+
 								<p class="Success-message"><?php echo $Uploadmeassege ?></php>
-								<p class="Success-message"> <?php echo $linkUserTest ?></php>
-								<p class="Success-message"> <?php echo $linkUserLive ?></php>
 								<p class="error-message"><?php echo $UploadmeassegeError ?></php>
 								</p>
-								<label for="">Visitor name</label> <span
+								<label for="">Visitor name<span class="required-field">&nbsp;*</span></label> <span
 									class="error-message"><?php echo $nameErr ?></span>
+
 								<input type="text" placeholder="Clement Maluleke" name="FullNAme"
 									Value="<?php echo $FullName ?>">
 							</div>
@@ -297,15 +295,18 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 							<div class="col-lg-12">
 
-								<label for="">Visitor Email</label><span
+								<label for="">Visitor Email<span class="required-field">&nbsp;*</span></label><span
 									class="error-message"><?php echo $emailErr ?></span>
+								<p class="warning-text">An induction invitation will be sent to this email address.</p>
 								<input type="email" placeholder="example@gmail.com" name="Email"
 									Value="<?php echo $VisitorEmail ?>">
+
 							</div>
 
 
 							<div class="col-lg-12">
-								<label for="businessUnit" id="business-ulabel">Business Department</label><span
+								<label for="businessUnit" id="business-ulabel">Business Department<span
+										class="required-field">&nbsp;*</span></label><span
 									class="error-message"><?php echo $BusinessErr ?></span>
 								<select name="businessUnit" id="Select-business">
 									<option value="">-- Select Department --</option>
@@ -319,7 +320,8 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 
 							<div class="col-lg-12">
-								<label for="Host" id="host-label">Host</label><span class="error-message">
+								<label for="Host" id="host-label">Host<span
+										class="required-field">&nbsp;*</span></label><span class="error-message">
 									<?php echo $HostErr ?>
 								</span>
 								<select name="Host" id="Select-host">

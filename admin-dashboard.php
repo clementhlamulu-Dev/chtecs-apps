@@ -2,7 +2,7 @@
 require_once __DIR__ . "/includes/db-connect.php";
 ?>
 
-<!DOCTYPE html>+
+<!DOCTYPE html>
 <html lang="eng">
 
 <head>
@@ -26,27 +26,155 @@ require_once __DIR__ . "/includes/db-connect.php";
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-
 					<div class="main-page-heading">
-						<h1 class="switch-red">
+						<h1 class="switch-dblue">
 							Admin Dashboard
 						</h1>
 					</div>
+				</div>
+			</div>
 
-
-
+			<div class="row">
+				<?php
+				$sql = "SELECT COUNT(*) AS userCount FROM InductionTable WHERE user_id IS NOT NULL";
+				// Execute the SQ
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row
+					while ($row = $result->fetch_assoc()) {
+						$userCount = $row["userCount"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $userCount; ?></div>
+						<div class="das-discription">Number of users in the system</div>
+					</div>
 				</div>
 
+				<?php
+				$sql = "SELECT COUNT(*) AS WatchVideoCount FROM InductionTable WHERE VideoProgress_seconds != 0";
+				// Execute the SQ
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row 
+					while ($row = $result->fetch_assoc()) {
+						$WatchVideoCount = $row["WatchVideoCount"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $WatchVideoCount; ?></div>
+						<div class="das-discription">Total Number of users That Wached the Video</div>
+					</div>
+				</div>
+
+				<?php
+				$sql = "SELECT COUNT(*) AS QuizTakersCount FROM InductionTable WHERE Question1 IS NOT NULL";
+				// Execute the SQL
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row
+					while ($row = $result->fetch_assoc()) {
+						$QuizTakersCount = $row["QuizTakersCount"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $QuizTakersCount; ?></div>
+						<div class="das-discription">Total Number of users that took the Quiz</div>
+					</div>
+				</div>
+
+				<?php
+				$sql = "SELECT COUNT(*) AS QuizPassersCount FROM InductionTable WHERE Quiz_Results >=20";
+				// Execute the SQL
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row
+					while ($row = $result->fetch_assoc()) {
+						$QuizPassersCount = $row["QuizPassersCount"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $QuizPassersCount; ?></div>
+						<div class="das-discription">Total number of users that passed the quiz</div>
+					</div>
+				</div>
+
+				<?php
+				$sql = "SELECT COUNT(*) AS QuizFailersCount FROM InductionTable WHERE Question1 IS NOT NULL AND Quiz_Results < 20";
+				// Execute the SQL
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row
+					while ($row = $result->fetch_assoc()) {
+						$QuizFailersCount = $row["QuizFailersCount"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $QuizFailersCount; ?></div>
+						<div class="das-discription">Total number of users that failed the quiz</div>
+					</div>
+				</div>
+
+				<?php
+				$sql = "SELECT COUNT(*) FROM InductionTable WHERE user_id IS NOT NULL";
+				// Execute the SQ
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// Output data of each row
+					while ($row = $result->fetch_assoc()) {
+						$userCount = $row["COUNT(*)"];
+					}
+				}
+				?>
+				<div class="col-lg-2">
+					<div class="das-summery">
+						<div class="dash-number"><?php echo $QuizFailersCount; ?></div>
+						<div class="das-discription">Total number of users that failed the quiz</div>
+					</div>
+				</div>
+			</div>
+
+			<style>
+				.das-summery {
+					background-color: #1B3B5F;
+					color: #fff;
+					padding: 20px;
+					margin-bottom: 20px;
+					min-height: 100%;
+					border-radius: 5px;
+					text-align: center;
+				}
+
+				.das-discription {
+					font-weight: 400;
+					font-size: 13px;
+				}
+
+				.dash-number {
+					font-size: 30px;
+					font-weight: 600;
+					text-align: center;
+				}
+			</style>
 
 
+			<div class="row">
 				<div class="dashboard-block">
 					<div class="row">
 						<div class="col-lg-4">
 							<h2 class="dashboard-headline">User Details</h2>
 						</div>
-						<div class="col-lg-1">
-							<h2 class="dashboard-headline">Video ID</h2>
-						</div>
+
 
 						<div class="col-lg-3">
 							<h2 class="dashboard-headline">Business Department</h2>
@@ -72,7 +200,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 					while ($row = $result->fetch_assoc()) {
 						// echo "id: " . $row["id"] . " - Name: " . $row["firstname"] . " " . $row["lastname"] . "<br>";
 						$user_id = $row["user_id"];
-						$video_Id = $row["video_id"];
+
 						$FullName = $row["firstname"];
 						$VisitorEmail = $row["email"];
 						$businessUnit = $row["BusinessUnit"];
@@ -100,20 +228,13 @@ require_once __DIR__ . "/includes/db-connect.php";
 																	<div class='initials'>$initial  </div>
 															</div>
 															<div class='name-block'>
-																<h3 class='switch-red'>$FullName</h3>
+																<h3 class='switch-dblue'>$FullName</h3>
 																<p class='user-email'>$VisitorEmail</p>
 																<p class='user-email'>user id: $user_id</p>
 															</div>
 														</div>
 													</div>
 
-													<div class='col-lg-1'>
-														<div class='min-100-relative'>
-															<div class='video-block'>
-																<p class='user-email'>$video_Id</p>
-															</div>
-														</div>
-													</div>
 
 													<div class='col-lg-3'>
 															<div class='min-100-relative'>
@@ -145,14 +266,16 @@ require_once __DIR__ . "/includes/db-connect.php";
 				?>
 				<style>
 					.dashboard-headline {
-						font-size: 26px;
+						font-size: 22px;
+						margin-bottom: 0px;
+						font-weight: 600;
+						color: #1B3B5F;
 					}
 
 					.video-block {
 						height: 100%;
-						padding: 19px 0px;
-						padding-top: 52px;
-
+						padding: 0px 0px;
+						padding-top: 25px;
 					}
 
 					.name-block {
@@ -163,11 +286,12 @@ require_once __DIR__ . "/includes/db-connect.php";
 					.name-block h3 {
 						font-size: 22px;
 						margin-bottom: 5px;
+						margin-top: 0px !important;
 					}
 
 					.user-email {
 						font-size: 14px;
-						color: #666;
+						color: #1B3B5F;
 						margin-bottom: 0px;
 						font-style: italic;
 					}
@@ -195,8 +319,8 @@ require_once __DIR__ . "/includes/db-connect.php";
 						height: 50px;
 						border-radius: 50%;
 						background-color: #eee;
-						color: #DD052B;
-						border: 1px solid #DD052B;
+						color: #1B3B5F;
+						border: 1px solid #1B3B5F;
 						text-align: center;
 						line-height: 50px;
 						font-size: 20px;
