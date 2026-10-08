@@ -19,6 +19,7 @@ if ($result->num_rows > 0) {
 	// Output data of each row
 	while ($row = $result->fetch_assoc()) {
 		$VisitorEmail = $row["email"];
+		$FullName = $row["firstname"];
 	}
 }
 require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
@@ -109,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 										</p>
 
 										<p> or visit the induction page to complete the video and assessment again on:<br>
-											<a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id'>
+											<a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$user_id'>
 												Start Visitor Induction
 											</a>
 										</p>
@@ -127,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 										Please visit the induction page to complete the video
 										and assessment again on:
-										https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id
+										https://dev-apps.chtecs.co.za/visitor-page.php?id=$user_id
 									";
 
 				$mail->send();
