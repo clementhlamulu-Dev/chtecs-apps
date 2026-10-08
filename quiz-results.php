@@ -254,6 +254,7 @@ function checkAnswers($ChoosenAnswer, $correctAnswer, $scoreCount)
 	</title>
 	<?php include('includes/metadata.php'); ?>
 	<?php include('includes/head.php'); ?>
+	<link rel="stylesheet" href="css/app-styles.css">
 </head>
 
 
@@ -266,80 +267,118 @@ function checkAnswers($ChoosenAnswer, $correctAnswer, $scoreCount)
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="main-page-heading">
-						<h1>
-							Quiz results
-						</h1>
-					</div>
+
 				</div>
 			</div>
+			<style>
+				.quiz-results-block {
+					padding: 15px;
+					border-radius: 15px;
+					border: 1px solid #1B3B5F;
+					color: #FFF;
+					background: #1B3B5F;
+					margin-bottom: 25px;
+				}
 
+				.quiz-results-block p,
+				.quiz-results-block h3,
+				.quiz-results-block h1 {
+					color: #FFF
+				}
+
+				.correction-block {
+					border-bottom: 1px solid #1B3B5F;
+					margin-bottom: 25px;
+				}
+
+				.padding-25 {
+					padding: 25px;
+				}
+			</style>
 
 			<div class="row">
-				<div class="col-lg-4">
+				<div class="col-lg-12">
 					<div class="quiz-results-block">
-						<h3></h3>
+						<div class="main-page-heading">
+							<h1>
+								Quiz results
+							</h1>
+						</div>
+						<h3>$userCore</h3>
+						<p>$Quiz_Results</p>
 
 					</div>
 				</div>
 			</div>
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>1. What is the main purpose of health and safety?</p>
-					<p>Your answer: <?php echo $Question1 ?></p>
-					<p>Correct answer: To stay safe every day</p>
+
+			<div class="padding-25">
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>1. What is the main purpose of health and safety?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question1 ?></p>
+						<p><strong>Correct answer:</strong> To stay safe every day</p>
+					</div>
 				</div>
-			</div>
 
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>1. What is the main purpose of health and safety?</p>
-					<p>Your answer: <?php echo $Question1 ?></p>
-					<p>Correct answer: To stay safe every day</p>
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>1. What is the main purpose of health and safety?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question1 ?></p>
+						<p><strong>Correct answer:</strong> To stay safe every day</p>
+					</div>
 				</div>
-			</div>
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>2. One of your right as employee is to?</p>
-					<p>Your answer: <?php echo $Question2 ?></p>
-					<p>Correct answer: Work in a Health and Safe Environment</p>
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>2. One of your right as employee is to?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question2 ?></p>
+						<p><strong>Correct answer:</strong> Work in a Health and Safe Environment</p>
+					</div>
 				</div>
-			</div>
 
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>3. What is the main purpose of health and safety?</p>
-					<p>Your answer: <?php echo $Question3 ?></p>
-					<p>Correct answer: Follow health and Safety instructions</p>
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>3. What is the main purpose of health and safety?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question3 ?></p>
+						<p><strong>Correct answer:</strong> Follow health and Safety instructions</p>
+					</div>
 				</div>
-			</div>
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>4. Your responsibility as an employee is to?</p>
-					<p>Your answer:
-						<?php echo $Question4 ?>
-					</p>
-					<p>Correct answer: Take care of your own health and safety</p>
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>4. Your responsibility as an employee is to?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question4 ?>
+						</p>
+						<p><strong>Correct answer:</strong> Take care of your own health and safety</p>
+					</div>
 				</div>
-			</div>
 
 
-			<div class="correction-block">
-				<div class="r-question">
-					<p>5. What should you do if you notice unsafe event?</p>
-					<p>Your answer:
-						<?php echo $Question5 ?>
-					</p>
-					<p>Correct answer: Speak up</p>
+				<div class="correction-block">
+					<div class="r-question">
+						<h4>5. What should you do if you notice unsafe event?</h4>
+						<p><strong>Your answer:</strong> <?php echo $Question5 ?>
+						</p>
+						<p><strong>Correct answer:</strong> Speak up</p>
+					</div>
 				</div>
+
+
+				<div class="row mb-5">
+					<div class="col-lg-6">
+						<div class="submit-btn-block">
+							<a class="submit-btn"
+								href="https://dev-apps.chtecs.co.za/video-quiz.php?id=<?php echo $last_id; ?>">Send
+								Invitatiion</a>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
-
-
 
 
 
