@@ -20,6 +20,8 @@ if ($result->num_rows > 0) {
 	while ($row = $result->fetch_assoc()) {
 		$VisitorEmail = $row["email"];
 		$FullName = $row["firstname"];
+
+		$userCore = $row["Quiz_Results"];
 	}
 }
 
@@ -320,8 +322,8 @@ function checkAnswers($ChoosenAnswer, $correctAnswer, $scoreCount)
 								Quiz results
 							</h1>
 						</div>
-						<h3>$userCore</h3>
-						<p>$Quiz_Results</p>
+						<h3><?php echo $userCore ?></h3>
+						<p><?php echo $Quiz_Results ?></p>
 
 					</div>
 				</div>
