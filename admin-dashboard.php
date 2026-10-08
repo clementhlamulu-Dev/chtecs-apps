@@ -201,6 +201,11 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 						$initial = strtoupper(substr($FullName, 0, 1)); // Get the first letter of the name and convert to uppercase
 				
+						if ($Quiz_Results >= 20) {
+							$QuizPassed = "Pass";
+						} else {
+							$QuizPassed = "Fail";
+						}
 
 
 						echo "
@@ -241,18 +246,16 @@ require_once __DIR__ . "/includes/db-connect.php";
 															<div class='video-block'>
 																<div class='row'>
 																<div class='col-lg-12'>
-																<p class='user-email'>Video Progress: $Videoprogress_percent%</p>
+																<p class='user-email'><strong>Video Progress:</strong> $Videoprogress_percent%</p>
 																	<div class='progress-container'>
-											
 																		<div class='progress-bar'
 																			style='width: $Videoprogress_percent%;'> 
 																		</div>
 
 																	</div>
 																</div>
-																	
-																	<p class='user-email'>Quiz Score: $Quiz_score</p>
-																	<p class='user-email'>Quiz Results: $Quiz_Results</p>
+																	<p class='user-email'><strong>Quiz Results:</strong> $Quiz_Results</p>
+																	<p class='user-email'><strong>Quiz Score:</strong> $QuizPassed</p>
 																</div>
 														</div>
 													</div>
