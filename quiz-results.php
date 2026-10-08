@@ -37,6 +37,203 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully";
+
+			// ===========================Email to user=================================================================
+
+
+			require_once __DIR__ . '/../enviroment-sec/config.php';
+			require __DIR__ . '/vendor/autoload.php';
+
+			$mail = new PHPMailer(true);
+
+
+			try {
+
+				// SMTP configuration
+				$mail->isSMTP();
+				$mail->Host = 'mail.chtecs.co.za';
+				$mail->SMTPAuth = true;
+				$mail->Username = 'no-reply@chtecs.co.za';
+				$mail->Password = $emailpass;
+				$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+				$mail->Port = 465;
+
+				// Sender
+				$mail->setFrom(
+					'no-reply@chtecs.co.za',
+					'CH Technological Solutions'
+				);
+
+				// Recipient
+				$mail->addAddress($VisitorEmail, $FullName);
+
+				// BCC
+				$mail->addBCC('clementhlamulu@gmail.com');
+
+				// Email format
+				$mail->isHTML(true);
+
+				$mail->Subject = 'Visitor Induction Required';
+
+				$mail->Body = "
+										<html>
+										<body>
+
+										<p>Hi $FullName,</p>
+
+										<p>
+											$Quiz_Results. you have scored $userCore out of $totalScore. <br>
+										</p>
+
+										<p>
+											Please View your results on the link below:<br>
+											<a href='https://dev-apps.chtecs.co.za/quiz-results.php?id=$user_id'>
+												View Quiz Results
+											</a>
+										</p>
+
+										<p> or visit the induction page to complete the video and assessment again on:<br>
+											<a href='https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id'>
+												Start Visitor Induction
+											</a>
+										</p>
+
+										<p>Thank you.</p>
+
+										</body>
+										</html>
+									";
+
+				$mail->AltBody = "
+										Hi $FullName,
+
+										$Quiz_Results;
+
+										Please visit the induction page to complete the video
+										and assessment again on:
+										https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id
+									";
+
+				$mail->send();
+
+				//
+
+			} catch (Exception $e) {
+
+				echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+
+			}
+
+
+
+
+			// ================================================================================================
+
+
+
+
+
+
+			// ===========================Email to user=================================================================
+
+
+			require_once __DIR__ . '/../enviroment-sec/config.php';
+			require __DIR__ . '/vendor/autoload.php';
+
+			$mail = new PHPMailer(true);
+
+
+			try {
+
+				// SMTP configuration
+				$mail->isSMTP();
+				$mail->Host = 'mail.chtecs.co.za';
+				$mail->SMTPAuth = true;
+				$mail->Username = 'no-reply@chtecs.co.za';
+				$mail->Password = $emailpass;
+				$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+				$mail->Port = 465;
+
+				// Sender
+				$mail->setFrom(
+					'no-reply@chtecs.co.za',
+					'CH Technological Solutions'
+				);
+
+				// Recipient
+				$mail->addAddress("clementhlamulu@gmail.com", "CH Tecs admin");
+
+				// BCC
+				$mail->addBCC('clementhlamulu@gmail.com');
+
+				// Email format
+				$mail->isHTML(true);
+
+				$mail->Subject = $FullName . ' has completed the induction assessment';
+
+				$mail->Body = "
+										<html>
+										<body>
+
+										<p>Hi Admin,</p>
+
+										<p>
+											The visitor $FullName has completed the induction assessment and scored $userCore out of $totalScore. <br>
+
+											
+										</p>
+
+										<p>
+										View the results on the link below:<br>
+											<a href='https://dev-apps.chtecs.co.za/admin-dashboard.php'>
+												View Dashboard
+											</a>
+										</p>
+
+										
+
+										<p>Thank you.</p>
+
+										</body>
+										</html>
+									";
+
+				$mail->AltBody = "
+										Hi $FullName,
+
+										$Quiz_Results;
+
+										Please visit the induction page to complete the video
+										and assessment again on:
+										https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id
+									";
+
+				$mail->send();
+
+				//
+
+			} catch (Exception $e) {
+
+				echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+
+			}
+
+
+
+
+			// ================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
 		} else {
 			echo "Error updating record: " . $conn->error;
 		}

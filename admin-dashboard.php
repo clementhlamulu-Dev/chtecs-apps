@@ -171,7 +171,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 			<div class="row">
 				<div class="dashboard-block">
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<h2 class="dashboard-headline">User Details</h2>
 						</div>
 
@@ -182,6 +182,9 @@ require_once __DIR__ . "/includes/db-connect.php";
 
 						<div class="col-lg-3">
 							<h2 class="dashboard-headline">Induction Host</h2>
+						</div>
+						<div class="col-lg-3">
+							<h2 class="dashboard-headline">Quiz Details</h2>
 						</div>
 					</div>
 				</div>
@@ -222,7 +225,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 						echo "
 										<div class='dashboard-block'>
 											<div class='row'>
-													<div class='col-lg-4'>
+													<div class='col-lg-3'>
 														<div class='min-100-relative'>
 															<div class='initials-blcok'>
 																	<div class='initials'>$initial  </div>
@@ -252,6 +255,37 @@ require_once __DIR__ . "/includes/db-connect.php";
 														</div>
 													</div>
 												</div>
+												<div class='col-lg-2'>
+													<div class='min-100-relative'>
+															<div class='video-block'>
+																<div class='row'>
+																<div class='col-lg-12'>
+																<p class='user-email'>Video Progress: $Videoprogress_percent%</p>
+																	<div class='progress-container'>
+											
+																		<div class='progress-bar'
+																			style='width: $Videoprogress_percent%;'> 
+																		</div>
+
+																	</div>
+																</div>
+																	
+																	<p class='user-email'>Quiz Score: $Quiz_score</p>
+																	<p class='user-email'>Quiz Results: $Quiz_Results</p>
+																</div>
+														</div>
+													</div>
+												</div>
+
+												<div class='col-lg-1'>
+													<div class='min-100-relative'>
+															<div class='video-block'>
+															<div class='dblock'>
+																<a href='quiz-results.php?id=$user_id' class='btn delete-btn'>Delete</a>
+																</div>
+														</div>
+													</div>
+												</div>
 												
 										
 
@@ -265,6 +299,32 @@ require_once __DIR__ . "/includes/db-connect.php";
 				}
 				?>
 				<style>
+					.dblock {
+						display: block;
+						margin-bottom: 15px;
+					}
+
+					.progress-container {
+						width: 100px;
+						height: 15px;
+						background-color: #f3f3f3;
+						border-bottom-left-radius: 30px;
+						border-bottom-right-radius: 30px;
+						border-top-left-radius: 30px;
+						border-top-right-radius: 30px;
+						border: 1px solid #1B3B5F;
+
+					}
+
+					.progress-bar {
+						height: 100%;
+						background-color: #1B3B5F;
+						border-bottom-left-radius: 30px;
+						border-bottom-right-radius: 30px;
+						border-top-left-radius: 30px;
+						border-top-right-radius: 30px;
+					}
+
 					.dashboard-headline {
 						font-size: 22px;
 						margin-bottom: 0px;
@@ -275,7 +335,7 @@ require_once __DIR__ . "/includes/db-connect.php";
 					.video-block {
 						height: 100%;
 						padding: 0px 0px;
-						padding-top: 25px;
+						padding-top: 0px;
 					}
 
 					.name-block {
