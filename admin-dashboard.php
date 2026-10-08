@@ -266,6 +266,12 @@ require_once __DIR__ . "/includes/db-connect.php";
 																<button type='submit' href='quiz-results.php?id=$user_id' class='btn delete-btn'>Delete</button>
 																</form>
 																</div>
+
+																<div class='dblock'>
+															
+																<a href='quiz-results.php?id=$user_id' class='btn delete-btn'>View Quiz Results</a>
+																
+																</div>
 														</div>
 													</div>
 												</div>
