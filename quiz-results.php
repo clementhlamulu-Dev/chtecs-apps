@@ -8,7 +8,7 @@ if (!$user_id) {
 	die("Invalid induction link.");
 }
 
-
+require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 
 $sql = "SELECT * FROM InductionTable WHERE user_id = $user_id";
 
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
 }
 
 
-require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
+
 $Question1 = $Question3 = $Question2 = $Question4 = $Question5 = "";
 $q1Err = $Quiz_Results = "";
 $userCore = 0;
