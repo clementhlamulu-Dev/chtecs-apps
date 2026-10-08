@@ -7,7 +7,7 @@
 		width: 100%;
 		padding: 15px;
 		margin-bottom: 25px;
-		border: 1px solid #DD052B;
+		border: 1px solid #1B3B5F;
 	}
 
 	.invit-form select {
@@ -15,24 +15,24 @@
 		width: 100%;
 		padding: 15px;
 		margin-bottom: 25px;
-		border: 1px solid #DD052B;
+		border: 1px solid #1B3B5F;
 	}
 
 	.invit-form {
 		width: 70%;
 		padding: 15px;
-		border: 1px solid #DD052B;
+		border: 1px solid #1B3B5F;
 		margin: 25px auto;
 		margin-bottom: 50px;
-		box-shadow: 0px 0px 11px 0px #DD052B;
+		box-shadow: 0px 0px 11px 0px #1B3B5F;
 
 
 	}
 
 	.submit-btn {
 		padding: 15px 25px;
-		border: 1px solid #DD052B;
-		color: #DD052B;
+		border: 1px solid #1B3B5F;
+		color: #1B3B5F;
 		font-weight: 500;
 		transition: 500ms all ease-in;
 		text-decoration: none;
@@ -40,9 +40,9 @@
 	}
 
 	.submit-btn:hover {
-		background: #DD052B;
+		background: #1B3B5F;
 		color: #fff;
-		box-shadow: 0px 0px 11px 0px #DD052B;
+		box-shadow: 0px 0px 11px 0px #1B3B5F;
 
 	}
 
@@ -64,7 +64,7 @@
 	}
 
 	.switch-red {
-		color: #DD052B;
+		color: #1B3B5F;
 	}
 
 	.induction-video {
@@ -76,8 +76,8 @@
 	}
 
 	.question {
-		box-shadow: 0px 0px 11px 0px #DD052B;
-		border: 1px solid #DD052B;
+		box-shadow: 0px 0px 11px 0px #1B3B5F;
+		border: 1px solid #1B3B5F;
 		padding: 35px 25px;
 		margin-bottom: 35px;
 	}
@@ -109,12 +109,12 @@
 
 	.error-message {
 		font-style: italic;
-		color: #DD052B;
+		color: #1B3B5F;
 		font-size: 13px;
 	}
 
 	.finred {
-		border-bottom: 1px solid #DD052B;
+		border-bottom: 1px solid #1B3B5F;
 	}
 
 	.Success-message {
@@ -131,11 +131,11 @@
 	}
 
 	.finthick-red {
-		border-bottom: 2px solid #DD052B;
+		border-bottom: 2px solid #1B3B5F;
 	}
 
 	.finright {
-		border-right: 1px solid #DD052B;
+		border-right: 1px solid #1B3B5F;
 	}
 
 	/* 
