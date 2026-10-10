@@ -22,6 +22,7 @@ if ($result->num_rows > 0) {
 		$FullName = $row["firstname"];
 
 		$userCore = $row["Quiz_Results"];
+		$savedRow = $row;
 	}
 }
 
@@ -29,6 +30,7 @@ if ($result->num_rows > 0) {
 
 $Question1 = $Question3 = $Question2 = $Question4 = $Question5 = "";
 $q1Err = $Quiz_Results = "";
+$emailWarning = $saveError = "";
 $userCore = 0;
 $totalScore = 25;
 
@@ -50,15 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userCore = checkAnswers($Question5, "Speak up", $userCore);
 
 		if ($userCore >= 20) {
-			$Quiz_Results = "Congradulations!! You have passed the Quiz. Your score is " . $userCore;
+			$Quiz_Results = "Congratulations! You have passed the quiz. Your score is " . $userCore;
 		} else {
-			$Quiz_Results = "Sorry You have failed your Quiz. Your score is " . $userCore;
+			$Quiz_Results = "Sorry, you did not pass the quiz. Your score is " . $userCore;
 		}
 
 		$sql = "UPDATE InductionTable SET Question1 = '$Question1', Question2 = '$Question2', Question3 = '$Question3', Question4 = '$Question4', Question5 = '$Question5', Quiz_Results = '$userCore' WHERE user_id = $user_id";
 
 		if ($conn->query($sql) === TRUE) {
-			echo "Record updated successfully";
+			// Record updated successfully
 
 			// ===========================Email to user=================================================================
 
@@ -141,7 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			} catch (Exception $e) {
 
-				echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+				error_log("Results email to $VisitorEmail failed: {$mail->ErrorInfo}");
+				$emailWarning = "Your results have been saved, but we could not email you a copy. You can print this page or bookmark it instead.";
 
 			}
 
@@ -226,7 +229,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 										Please visit the induction page to complete the video
 										and assessment again on:
-										https://dev-apps.chtecs.co.za/visitor-page.php?id=$last_id
+										https://dev-apps.chtecs.co.za/visitor-page.php?id=$user_id
 									";
 
 				$mail->send();
@@ -235,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			} catch (Exception $e) {
 
-				echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+				error_log("Admin results notification for user $user_id failed: {$mail->ErrorInfo}");
 
 			}
 
@@ -244,7 +247,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			// ================================================================================================
 		} else {
-			echo "Error updating record: " . $conn->error;
+			error_log("Quiz results update for user $user_id failed: " . $conn->error);
+			$saveError = "We could not save your quiz answers. Please try again, or contact your host if the problem continues.";
 		}
 	}
 }
@@ -259,152 +263,126 @@ function checkAnswers($ChoosenAnswer, $correctAnswer, $scoreCount)
 	return $scoreCount;
 }
 
+// Viewing results later (email link / dashboard): show the answers saved in the database.
+if ($_SERVER["REQUEST_METHOD"] !== "POST" && !empty($savedRow)) {
+	$Question1 = $savedRow["Question1"] ?? "";
+	$Question2 = $savedRow["Question2"] ?? "";
+	$Question3 = $savedRow["Question3"] ?? "";
+	$Question4 = $savedRow["Question4"] ?? "";
+	$Question5 = $savedRow["Question5"] ?? "";
+	$userCore = (int) ($savedRow["Quiz_Results"] ?? 0);
+	if ($Question1 !== "") {
+		$Quiz_Results = ($userCore >= 20 ? "Congratulations! You have passed the quiz." : "Sorry, you did not pass the quiz.") . " Your score is " . $userCore;
+	}
+}
+
+$pageTitle = "Quiz Results";
+$isVisitorPage = true;
+$hasAttempt = !empty($Question1);
+$passed = $hasAttempt && $userCore >= 20;
+$scorePct = $totalScore > 0 ? round(($userCore / $totalScore) * 100) : 0;
+
+$review = [
+	["What is the main purpose of health and safety?", $Question1, "To stay safe every day"],
+	["One of your rights as an employee is to:", $Question2, "Work in a Health and Safe Environment"],
+	["One of your responsibilities is to:", $Question3, "Follow health and Safety instructions"],
+	["Your responsibility as an employee is to:", $Question4, "Take care of your own health and safety"],
+	["What should you do if you notice an unsafe event?", $Question5, "Speak up"],
+];
+
 ?>
 
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>Quiz results
-		<?php echo $pageTitle ?>
-	</title>
+	<title><?php echo $pageTitle ?> | CH Tecs Visitor Induction</title>
 	<?php include('includes/metadata.php'); ?>
 	<?php include('includes/head.php'); ?>
-	<link rel="stylesheet" href="css/app-styles.css">
 </head>
 
 
-<body id="<SECTIONSHORT>">
+<body id="quiz-results">
 	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigation.php'); ?>
 	<?php include('includes/report-tools.php'); ?>
-	<?php include('includes/breadcrumb.php'); ?>
 	<div id="selectable-content">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
+			<div class="app-card-narrow">
 
-				</div>
-			</div>
-			<style>
-				.quiz-results-block {
-					padding: 15px;
-					border-radius: 15px;
-					border: 1px solid #1B3B5F;
-					color: #FFF;
-					background: #1B3B5F;
-					margin-bottom: 25px;
-				}
+				<ol class="steps" aria-label="Induction steps">
+					<li class="done"><span class="step-num">&#10003;</span> Watch video</li>
+					<li class="done"><span class="step-num">&#10003;</span> Assessment</li>
+					<li class="current"><span class="step-num">3</span> Results</li>
+				</ol>
 
-				.quiz-results-block p,
-				.quiz-results-block h3,
-				.quiz-results-block h1 {
-					color: #FFF
-				}
-
-				.correction-block {
-					border-bottom: 1px solid #1B3B5F;
-					margin-bottom: 25px;
-				}
-
-				.padding-25 {
-					padding: 25px;
-				}
-			</style>
-
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="quiz-results-block">
-						<div class="main-page-heading">
-							<h1>
-								Quiz results
-							</h1>
-						</div>
-						<h3><?php echo $userCore ?></h3>
-						<p><?php echo $Quiz_Results ?></p>
-
+				<?php if ($saveError): ?>
+					<div class="app-alert app-alert-error" role="alert">
+						<span aria-hidden="true">!</span><span><?php echo $saveError ?></span>
 					</div>
-				</div>
-			</div>
-
-
-			<div class="padding-25">
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>1. What is the main purpose of health and safety?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question1 ?></p>
-						<p><strong>Correct answer:</strong> To stay safe every day</p>
+				<?php endif; ?>
+				<?php if ($emailWarning): ?>
+					<div class="app-alert app-alert-warning" role="status">
+						<span aria-hidden="true">!</span><span><?php echo $emailWarning ?></span>
 					</div>
-				</div>
+				<?php endif; ?>
 
-
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>1. What is the main purpose of health and safety?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question1 ?></p>
-						<p><strong>Correct answer:</strong> To stay safe every day</p>
-					</div>
-				</div>
-
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>2. One of your right as employee is to?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question2 ?></p>
-						<p><strong>Correct answer:</strong> Work in a Health and Safe Environment</p>
-					</div>
-				</div>
-
-
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>3. What is the main purpose of health and safety?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question3 ?></p>
-						<p><strong>Correct answer:</strong> Follow health and Safety instructions</p>
-					</div>
-				</div>
-
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>4. Your responsibility as an employee is to?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question4 ?>
-						</p>
-						<p><strong>Correct answer:</strong> Take care of your own health and safety</p>
-					</div>
-				</div>
-
-
-				<div class="correction-block">
-					<div class="r-question">
-						<h4>5. What should you do if you notice unsafe event?</h4>
-						<p><strong>Your answer:</strong> <?php echo $Question5 ?>
-						</p>
-						<p><strong>Correct answer:</strong> Speak up</p>
-					</div>
-				</div>
-
-
-				<div class="row mb-5">
-					<div class="col-lg-6">
-						<div class="submit-btn-block">
-							<a class="submit-btn"
-								href="https://dev-apps.chtecs.co.za/video-quiz.php?id=<?php echo $last_id; ?>">Send
-								Invitatiion</a>
+				<?php if (!$hasAttempt): ?>
+					<div class="app-card">
+						<h1 class="switch-dblue">Quiz results</h1>
+						<p class="page-intro">No assessment has been submitted for this induction yet.</p>
+						<div class="form-actions">
+							<a class="submit-btn" href="visitor-page.php?id=<?php echo $user_id; ?>">Start Induction</a>
 						</div>
 					</div>
-				</div>
+				<?php else: ?>
+					<div class="result-hero <?php echo $passed ? 'is-pass' : 'is-fail'; ?>">
+						<div class="score-ring" style="--pct: <?php echo $scorePct; ?>;">
+							<div class="score-value"><div><?php echo $userCore ?><small class="score-total">/ <?php echo $totalScore ?></small></div></div>
+						</div>
+						<div>
+							<span class="badge <?php echo $passed ? 'badge-pass' : 'badge-fail'; ?>">
+								<?php echo $passed ? 'PASSED' : 'NOT PASSED'; ?>
+							</span>
+							<h1 class="mt-2">Quiz results</h1>
+							<p><?php echo htmlspecialchars($Quiz_Results) ?></p>
+							<?php if (!$passed): ?>
+								<p>You need 20 out of <?php echo $totalScore ?> to pass. Review the answers below and try again.</p>
+							<?php endif; ?>
+						</div>
+					</div>
 
+					<div class="app-card">
+						<h2>Your answers</h2>
+						<ol class="answer-list">
+							<?php foreach ($review as $i => [$question, $answer, $correct]):
+								$isCorrect = ($answer === $correct); ?>
+								<li class="answer-item <?php echo $isCorrect ? 'is-correct' : 'is-wrong'; ?>">
+									<h4><?php echo ($i + 1) . '. ' . htmlspecialchars($question); ?>
+										<span class="badge <?php echo $isCorrect ? 'badge-pass' : 'badge-fail'; ?>">
+											<?php echo $isCorrect ? 'Correct' : 'Incorrect'; ?>
+										</span>
+									</h4>
+									<p><span class="label">Your answer:</span> <span class="yours"><?php echo htmlspecialchars($answer ?? ''); ?></span></p>
+									<?php if (!$isCorrect): ?>
+										<p><span class="label">Correct answer:</span> <?php echo htmlspecialchars($correct); ?></p>
+									<?php endif; ?>
+								</li>
+							<?php endforeach; ?>
+						</ol>
 
+						<div class="form-actions">
+							<?php if (!$passed): ?>
+								<a class="submit-btn" href="visitor-page.php?id=<?php echo $user_id; ?>">Retake Induction</a>
+							<?php endif; ?>
+							<button type="button" class="submit-btn btn-outline" onclick="printPage()">Print results</button>
+						</div>
+					</div>
+				<?php endif; ?>
 			</div>
-
-
-
-
-
-
 		</div>
-	</div>
 	</div>
 	<?php include('includes/footer.php'); ?>
 </body>

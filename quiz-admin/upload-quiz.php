@@ -1,70 +1,58 @@
 <?php
 // require_once __DIR__ . "/includes/db-connect.php";
+$base = '../';
+$pageTitle = "Upload Quiz";
 ?>
 
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Company Name Results type for the year ended Day&nbsp;Month&nbsp;Year |
-        <?php echo $pageTitle ?>
-    </title>
+    <title><?php echo $pageTitle ?> | CH Tecs Visitor Induction</title>
     <?php include('../includes/metadata.php'); ?>
     <?php include('../includes/head.php'); ?>
-    <link rel="stylesheet" href="../css/app-styles.css">
 </head>
 
 
-<body id="<SECTIONSHORT>">
+<body id="upload-quiz">
     <?php include('../includes/header.php'); ?>
     <?php include('../includes/navigation.php'); ?>
 
-    <?php include('../includes/breadcrumb.php'); ?>
     <div id="selectable-content">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-
+            <div class="invit-form">
+                <form action="">
                     <div class="main-page-heading">
-                        <h1 class="switch-red">
-                            Admin Dashboard
-                        </h1>
+                        <span class="eyebrow">Quiz admin</span>
+                        <h1 class="switch-dblue">Upload a Quiz Question</h1>
+                        <p>Add a question and its four answer options.</p>
                     </div>
 
+                    <div class="form-field">
+                        <label for="quizName">Quiz name</label>
+                        <input type="text" id="quizName" name="quizName" placeholder="Enter quiz name" required>
+                    </div>
 
+                    <div class="form-field">
+                        <label for="questionNumber">Question number</label>
+                        <input type="text" id="questionNumber" name="questionNumber" placeholder="Enter question number" required>
+                    </div>
 
-                </div>
+                    <div class="form-field">
+                        <label for="quizQuestion">Quiz question</label>
+                        <input type="text" id="quizQuestion" name="quizQuestion" placeholder="Enter quiz question" required>
+                    </div>
 
-
-
-                <div class="col-lg-12">
-                    <form action="">
-                        <label for="quiz-file">Quiz name</label>
-                        <input type="text" name="quizName" placeholder="Enter quiz name" required>
-
-                        <label for="quiz-file">Question Number</label>
-                        <input type="text" name="questionNumber" placeholder="Enter question number" required>
-
-                        <label for="quiz-file">Quiz Question</label>
-                        <input type="text" name="quizQuestion" placeholder="Enter quiz question" required>
-
-                        <label for="quiz-file">Quiz Options</label>
-                        <input type="text" name="quizOption1" placeholder="Enter option 1" required>
-                        <input type="text" name="quizOption2" placeholder="Enter option 2  " required>
-                        <input type="text" name="quizOption3" placeholder="Enter option 3" required>
-                        <input type="text" name="quizOption4" placeholder="Enter option 4" required>
-                    </form>
-
-
-                </div>
-
-
-
-
-
-
+                    <div class="form-field">
+                        <label for="quizOption1">Quiz options</label>
+                        <input type="text" id="quizOption1" name="quizOption1" placeholder="Enter option 1" required class="mb-2">
+                        <input type="text" name="quizOption2" placeholder="Enter option 2" required class="mb-2" aria-label="Option 2">
+                        <input type="text" name="quizOption3" placeholder="Enter option 3" required class="mb-2" aria-label="Option 3">
+                        <input type="text" name="quizOption4" placeholder="Enter option 4" required aria-label="Option 4">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -6,273 +6,205 @@ if (!$user_id) {
 
 require_once __DIR__ . "/includes/db-connect.php"; // assumes a mysqli $conn
 
+// Error passed back from quiz-results.php when not all questions were answered
+$q1Err = htmlspecialchars($_GET['q1Err'] ?? '');
+$pageTitle = "Induction Assessment";
+$isVisitorPage = true;
 
+// Question text and option values. Values must match the answers checked in quiz-results.php.
+$questions = [
+	1 => [
+		'text' => 'What is the main purpose of health and safety?',
+		'options' => [
+			'To stay safe every day' => 'To stay safe every day.',
+			'To show that you can follow the rules.' => 'To show that you can follow the rules.',
+			'To stay employed' => 'To stay employed',
+			"Protect Employer's Equipment" => "Protect Employer's Equipment",
+		],
+	],
+	2 => [
+		'text' => 'One of your rights as an employee is to:',
+		'options' => [
+			'Run' => 'Run',
+			'To Report unsafe enviroment' => 'To report an unsafe environment',
+			'Report your duty early' => 'Report your duty early',
+			'Work in a Health and Safe Environment' => 'Work in a healthy and safe environment',
+		],
+	],
+	3 => [
+		'text' => 'One of your responsibilities is to:',
+		'options' => [
+			'Run' => 'Run',
+			'Follow health and Safety instructions' => 'Follow health and safety instructions',
+			'Call supervisor whenever something goes wrong' => 'Call your supervisor whenever something goes wrong',
+			'None of the above' => 'None of the above',
+		],
+	],
+	4 => [
+		'text' => 'Your responsibility as an employee is to:',
+		'options' => [
+			'Take care of your own health and safety' => 'Take care of your own health and safety',
+			'Stay indoors' => 'Stay indoors',
+			'Call SOS' => 'Call SOS',
+			'All of the Above' => 'All of the above',
+		],
+	],
+	5 => [
+		'text' => 'What should you do if you notice an unsafe event?',
+		'options' => [
+			'Run' => 'Run',
+			'Follow health and safety standards' => 'Follow health and safety standards',
+			'Speak up' => 'Speak up',
+			'Knock off and go home' => 'Knock off and go home',
+		],
+	],
+];
+$totalQuestions = count($questions);
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>Company Name Results type for the year ended Day&nbsp;Month&nbsp;Year |
-		<?php echo $pageTitle ?>
-	</title>
+	<title><?php echo $pageTitle ?> | CH Tecs Visitor Induction</title>
 	<?php include('includes/metadata.php'); ?>
 	<?php include('includes/head.php'); ?>
-	<link rel="stylesheet" href="css/app-styles.css">
-	<link rel="stylesheet" href="css/animate.css">
-
-	<script src="js/wow.min.js"></script>
-	<script>
-		new WOW().init();
-	</script>
-
 </head>
 
 
-<body id="<SECTIONSHORT>">
+<body id="video-quiz">
 	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigation.php'); ?>
-	<?php include('includes/report-tools.php'); ?>
-	<?php include('includes/breadcrumb.php'); ?>
 	<div id="selectable-content">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main-page-heading">
-						<h1 class="switch-red">
-							Induction Assessment
-						</h1>
-					</div>
-				</div>
-			</div>
+			<div class="app-card-narrow">
 
-			<div class="quiz-block">
-				<div class="row">
-					<div class="col-lg-12">
-						<!-- <p><?php //echo $Quiz_Results ?></p> -->
-					</div>
+				<ol class="steps" aria-label="Induction steps">
+					<li class="done"><span class="step-num">&#10003;</span> Watch video</li>
+					<li class="current"><span class="step-num">2</span> Assessment</li>
+					<li><span class="step-num">3</span> Results</li>
+				</ol>
+
+				<div class="page-head">
+					<h1 class="switch-dblue">Induction Assessment</h1>
+					<p class="page-intro">Answer all <?php echo $totalQuestions; ?> questions. You need
+						20 out of 25 to pass.</p>
 				</div>
 
-				<form action="quiz-results.php?id=<?php echo $user_id; ?>" method="post">
-					<div class="row">
-						<div class="col-lg-12">
-							<p class="error-message">
-								<?php echo $q1Err ?>
-								</php>
-							<div class="question fadeIn" id="question1">
-								<p>What is the main purpose of health and safety?</p>
+				<?php if ($q1Err): ?>
+					<div class="app-alert app-alert-error" role="alert">
+						<span aria-hidden="true">!</span><span><?php echo $q1Err ?></span>
+					</div>
+				<?php endif; ?>
 
-								<input type="radio" id="Run" name="question1" value="To stay safe every day">
-								<label for="" id="To stay safe every day.">To stay safe every day.</label><br>
+				<div class="quiz-progress">
+					<div class="meter-label">
+						<span id="quizStepLabel">Question 1 of <?php echo $totalQuestions; ?></span>
+						<span id="quizStepPct">20%</span>
+					</div>
+					<div class="progress-container" style="max-width:none">
+						<div class="progress-bar" id="quizBar" style="width: <?php echo round(100 / $totalQuestions); ?>%;"></div>
+					</div>
+				</div>
 
-								<input type="radio" id="stay" name="question1"
-									value="To show that you can follow the rules.">
-								<label for="" id="To show that you can follow the rules.">To show that you can
-									follow
-									the rules.</label><br>
+				<form action="quiz-results.php?id=<?php echo $user_id; ?>" method="post" id="quizForm">
+					<?php foreach ($questions as $num => $q): ?>
+						<fieldset class="question" id="question<?php echo $num; ?>">
+							<legend class="question-text"><?php echo $num . '. ' . htmlspecialchars($q['text']); ?></legend>
 
-								<input type="radio" id="call-sos" name="question1" value="To stay employed">
-								<label for="" id="To stay employed">To stay employed</label><br>
+							<?php $opt = 0;
+							foreach ($q['options'] as $value => $label):
+								$opt++;
+								$inputId = "q{$num}-opt{$opt}"; ?>
+								<label class="option" for="<?php echo $inputId; ?>">
+									<input type="radio" id="<?php echo $inputId; ?>" name="question<?php echo $num; ?>"
+										value="<?php echo htmlspecialchars($value, ENT_QUOTES); ?>">
+									<span><?php echo htmlspecialchars($label); ?></span>
+								</label>
+							<?php endforeach; ?>
 
-								<input type="radio" id="emergency-exit" name="question1"
-									value="Protect Employer's Equipment">
-								<label for="" id="Protect Employer's Equipment">Protect Employer's
-									Equipment</label><br>
+							<p class="quiz-hint" aria-live="polite"></p>
 
+							<div class="quiz-nav">
+								<?php if ($num > 1): ?>
+									<button type="button" class="submit-btn btn-outline" onclick="PrevQuestion()">&larr; Back</button>
+								<?php else: ?>
+									<span class="spacer"></span>
+								<?php endif; ?>
 
-
-								<div class="quiz-nav">
-
-									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
-								</div>
-							</div>
-
-							<div class="question fadeIn" id="question2">
-								<p>One of your right as employee is to </p>
-								<input type="radio" id="Run" name="question2" value="Run">
-								<label for="" id="Run">Run</label><br>
-
-								<input type="radio" id="stay" name="question2" value="To Report unsafe enviroment">
-								<label for="" id="stay">To Report unsafe enviroment</label><br>
-
-								<input type="radio" id="call-sos" name="question2" value="Report your duty early">
-								<label for="" id="callSos">Report your duty early</label><br>
-
-								<input type="radio" id="emergency-exit" name="question2"
-									value="Work in a Health and Safe Environment">
-								<label for="" id="emergency-exit">Work in a Health and Safe Environment</label><br>
-
-
-
-								<div class="quiz-nav">
-									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
-									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
-								</div>
-							</div>
-
-							<div class="question fadeIn" id="question3">
-								<p>One of your responsibility is to </p>
-								<input type="radio" id="Run" name="question3" value="Run">
-								<label for="" id="Run">Run</label><br>
-
-								<input type="radio" id="stay" name="question3"
-									value="Follow health and Safety instructions">
-								<label for="" id="stay">Follow health and Safety instructions</label><br>
-
-								<input type="radio" id="call-sos" name="question3"
-									value="Call supervisor whenever something goes wrong">
-								<label for="" id="callSos">Call supervisor whenever something goes wrong</label><br>
-
-								<input type="radio" id="emergency-exit" name="question3" value="None of the above">
-								<label for="" id="emergency-exit">None of the above</label>
-
-
-
-								<div class="quiz-nav">
-									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
-									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
-								</div>
-							</div>
-
-							<div class="question fadeIn" id="question4">
-								<p>Your responsibility as an employee is to </p>
-								<input type="radio" id="Run" name="question4"
-									value="Take care of your own health and safety">
-								<label for="" id="Run">Take care of your own health and safety</label><br>
-
-								<input type="radio" id="stay" name="question4" value="Stay indoors">
-								<label for="" id="stay">Stay indoors</label><br>
-
-								<input type="radio" id="call-sos" name="question4" value="Call SOS">
-								<label for="" id="callSos">Call SOS</label><br>
-
-								<input type="radio" id="emergency-exit" name="question4" value="All of the Above">
-								<label for="" id="emergency-exit">All of the Above</label>
-
-
-
-								<div class="quiz-nav">
-									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
-									<div class="next-block" onclick="nextQuestion()">&nbsp;</div>
-								</div>
-							</div>
-
-							<div class="question fadeIn" id="question5">
-								<p>What should you do if you notice unsafe event</p>
-								<input type="radio" id="Run" name="question5" value="Run">
-								<label for="" id="Run">Run</label><br>
-
-								<input type="radio" id="stay" name="question5"
-									value="Follow health and safety standards">
-								<label for="" id="stay">Follow health and safety standards</label><br>
-
-								<input type="radio" id="call-sos" name="question5" value="Speak up">
-								<label for="" id="callSos">Speak up</label><br>
-
-								<input type="radio" id="emergency-exit" name="question5" value="Knock off and go home">
-								<label for="" id="emergency-exit">Knock off and go home</label>
-
-
-
-								<div class="quiz-nav ">
-									<div class="prev-block" onclick="PrevQuestion()">&nbsp;</div>
-
-								</div>
-								<div class="submit-btn-block quiz-nav">
+								<?php if ($num < $totalQuestions): ?>
+									<button type="button" class="submit-btn" onclick="nextQuestion()">Next &rarr;</button>
+								<?php else: ?>
 									<button class="submit-btn" type="submit">Finish and Submit Quiz</button>
-								</div>
+								<?php endif; ?>
 							</div>
-							<style>
-								.quiz-nav {
-
-									display: flex;
-									gap: 30px;
-									justify-content: center;
-								}
-
-
-								.prev-block,
-								.next-block {
-									display: inline-block;
-									position: relative;
-									padding: 15px;
-									width: 40px;
-									height: 40px;
-									border: 1px solid #1B3B5F;
-									border-radius: 50%;
-									cursor: pointer;
-									transition: 400ms all ease-in-out;
-								}
-
-								.prev-block:hover,
-								.next-block:hover {
-
-									box-shadow: 0px 0px 11px 0px #1B3B5F;
-
-
-								}
-
-								.question p {
-									font-weight: 600;
-								}
-
-								.prev-block:before {
-									content: "\e93b";
-									font-family: "icomoon";
-									position: absolute;
-									transition: inherit;
-
-									color: #1B3B5F;
-									font-size: 15px;
-									font-weight: 600;
-
-									top: 50%;
-									transform: translate(-50%, -50%);
-									left: 50%;
-								}
-
-								.next-block:before {
-									content: "\e93c";
-									font-family: "icomoon";
-									position: absolute;
-									transition: inherit;
-
-									color: #1B3B5F;
-									font-size: 15px;
-									font-weight: 600;
-
-									top: 50%;
-									transform: translate(-50%, -50%);
-									left: 50%;
-								}
-							</style>
-							<script>
-								let current = 1;
-								const totalQuestions = 5;
-
-								function nextQuestion() {
-									document.getElementById("question" + current).style.display = "none";
-									current++;
-
-									if (current <= totalQuestions) {
-										document.getElementById("question" + current).style.display = "block";
-									}
-								}
-
-								function PrevQuestion() {
-									document.getElementById("question" + current).style.display = "none";
-									current--;
-
-									if (current <= totalQuestions) {
-										document.getElementById("question" + current).style.display = "block";
-									}
-								}
-
-							</script>
-						</div>
-					</div>
-
+						</fieldset>
+					<?php endforeach; ?>
 				</form>
 
+				<script>
+					let current = 1;
+					const totalQuestions = <?php echo $totalQuestions; ?>;
+
+					function isAnswered(n) {
+						return !!document.querySelector('input[name="question' + n + '"]:checked');
+					}
+
+					function showQuestion(n) {
+						for (let i = 1; i <= totalQuestions; i++) {
+							document.getElementById("question" + i).style.display = (i === n) ? "block" : "none";
+						}
+						const pct = Math.round((n / totalQuestions) * 100);
+						document.getElementById("quizStepLabel").textContent = "Question " + n + " of " + totalQuestions;
+						document.getElementById("quizStepPct").textContent = pct + "%";
+						document.getElementById("quizBar").style.width = pct + "%";
+						const firstInput = document.querySelector("#question" + n + " input");
+						if (firstInput) firstInput.focus({ preventScroll: true });
+					}
+
+					function setHint(n, msg) {
+						document.querySelector("#question" + n + " .quiz-hint").textContent = msg;
+					}
+
+					function nextQuestion() {
+						if (!isAnswered(current)) {
+							setHint(current, "Please choose an answer to continue.");
+							return;
+						}
+						setHint(current, "");
+						if (current < totalQuestions) {
+							current++;
+							showQuestion(current);
+						}
+					}
+
+					function PrevQuestion() {
+						if (current > 1) {
+							current--;
+							showQuestion(current);
+						}
+					}
+
+					// Clear the hint as soon as an answer is picked
+					document.getElementById("quizForm").addEventListener("change", function (e) {
+						const fs = e.target.closest(".question");
+						if (fs) fs.querySelector(".quiz-hint").textContent = "";
+					});
+
+					// Jump to the first unanswered question instead of submitting an incomplete quiz
+					document.getElementById("quizForm").addEventListener("submit", function (e) {
+						for (let i = 1; i <= totalQuestions; i++) {
+							if (!isAnswered(i)) {
+								e.preventDefault();
+								current = i;
+								showQuestion(i);
+								setHint(i, "Please answer this question before submitting.");
+								return;
+							}
+						}
+					});
+				</script>
 			</div>
 		</div>
 	</div>
