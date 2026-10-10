@@ -6,7 +6,7 @@
 				<div class="col-6 align-self-center">
 					<div class="logo-block">
 						<a href="<?php echo $base; ?>index.php" title="Home">
-							<img src="<?php echo $base; ?>images/logo.png" alt="CH Technological Solutions" />
+							<img src="<?php echo $base; ?>images/ch-tecs-logo.svg" alt="CH Technological Solutions" />
 						</a>
 					</div>
 				</div>
