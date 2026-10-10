@@ -314,7 +314,15 @@ a:hover { color: var(--brand-600); }
 	background: #000;
 	margin-bottom: 20px;
 }
-.video { display: block; margin-bottom: 0; }
+.video {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	object-fit: contain;
+	background: #000;
+	margin-bottom: 0;
+}
 
 .steps {
 	display: flex;

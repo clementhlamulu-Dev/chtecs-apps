@@ -44,12 +44,22 @@ $isVisitorPage = true;
 
 				<div class="app-card">
 					<div class="video-frame">
-						<video controls="controls" class="video" playsinline
+						<!-- playsinline/webkit-playsinline keep iPhone from forcing fullscreen;
+							 preload="metadata" lets iOS read the duration so progress can resume -->
+						<!-- playsinline/webkit-playsinline keep iPhone from forcing fullscreen;
+							 preload="metadata" lets iOS read the duration so progress can resume -->
+						<video controls class="video" playsinline webkit-playsinline x-webkit-airplay="allow"
+							controlslist="nodownload"
 							poster="https://vod.overendstudio.co.za/uploadimages/Screenshot_20260601_122755_copy_thumbnail_1780320029.jpg"
-							preload="none" width="100%" height="auto" id="html5_video_7pxmfc8xc5b">
+							preload="metadata" id="html5_video_7pxmfc8xc5b">
+							<source src="https://dev-apps.chtecs.co.za/videos/worksafe-induction-video.mp4"
+								type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 							<source src="https://dev-apps.chtecs.co.za/videos/worksafe-induction-video.mp4"
 								type="video/mp4">
-							Your browser does not support HTML5 video.
+							<p>Your browser does not support HTML5 video.
+								<a href="https://dev-apps.chtecs.co.za/videos/worksafe-induction-video.mp4">Download the
+									video</a>.
+							</p>
 						</video>
 					</div>
 
@@ -95,21 +105,35 @@ $isVisitorPage = true;
 					let totalWatched = 0;
 					let unlocked = false;
 
-					// Load previous progress and resume
-					video.addEventListener("loadedmetadata", () => {
-						fetch(`${ENDPOINT}?id=${encodeURIComponent(USER_ID)}`)
-							.then(r => r.json())
-							.then(data => {
-								if (!data.success) return;
-								totalWatched = data.watched;
-								if (data.last_position > 0 && data.last_position < video.duration - 2) {
-									video.currentTime = data.last_position;
-								}
-								lastVideoTime = video.currentTime;
-								checkUnlock();
-							})
-							.catch(err => console.error("Could not load progress:", err));
-					});
+					// Load previous progress and resume.
+					// iOS Safari may not fire loadedmetadata until the user taps play, and can
+					// ignore currentTime set before playback starts, so resume is retried on play.
+					let resumeAt = 0;
+
+					function applyResume() {
+						if (!resumeAt || !video.duration) return;
+						if (resumeAt < video.duration - 2) {
+							video.currentTime = resumeAt;
+						}
+						if (Math.abs(video.currentTime - resumeAt) < 1 || resumeAt >= video.duration - 2) {
+							resumeAt = 0;
+						}
+						lastVideoTime = video.currentTime;
+					}
+
+					fetch(`${ENDPOINT}?id=${encodeURIComponent(USER_ID)}`)
+						.then(r => r.json())
+						.then(data => {
+							if (!data.success) return;
+							totalWatched = data.watched;
+							resumeAt = data.last_position > 0 ? data.last_position : 0;
+							applyResume();
+							checkUnlock();
+						})
+						.catch(err => console.error("Could not load progress:", err));
+
+					video.addEventListener("loadedmetadata", () => { applyResume(); checkUnlock(); });
+					video.addEventListener("playing", applyResume);
 
 					// Count only normal playback, not skipping
 					video.addEventListener("timeupdate", () => {
@@ -156,7 +180,7 @@ $isVisitorPage = true;
 						formData.append("id", USER_ID);
 						formData.append("watch_time", seconds);
 						formData.append("position", video.currentTime.toFixed(2));
-						formData.append("duration", video.duration.toFixed(2));
+						formData.append("duration", (video.duration || 0).toFixed(2));
 
 						if (useBeacon) {
 							navigator.sendBeacon(ENDPOINT, formData);
@@ -175,6 +199,10 @@ $isVisitorPage = true;
 					video.addEventListener("pause", () => flush());
 					video.addEventListener("ended", () => flush());
 					window.addEventListener("pagehide", () => flush(true));
+					// iOS often skips pagehide when switching apps or closing the tab
+					document.addEventListener("visibilitychange", () => {
+						if (document.visibilityState === "hidden") flush(true);
+					});
 
 				</script>
 			</div>
